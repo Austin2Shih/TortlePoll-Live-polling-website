@@ -25,7 +25,7 @@ export default async function handler(req, res) {
     }
   );
 
-  pusher.trigger('polling-development', 'new-click', {}).then(console.log('bye'))
+  pusher.trigger('polling-development', 'new-click', {})
 
   res.json(response);
 }
