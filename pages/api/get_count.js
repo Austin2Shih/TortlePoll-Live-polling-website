@@ -1,8 +1,8 @@
-import { connectToDatabase } from '../../util/mongodb';
+import clientPromise from '../../util/mongodb';
 
 export default async function handler(req, res) {
-  console.log("getting count")
-  const {db} = await connectToDatabase();
+  const client = await clientPromise
+  const db = client.db(process.env.MONGODB_DB)
 
   const data = await db.collection("button_clicks").find({}).toArray();
   

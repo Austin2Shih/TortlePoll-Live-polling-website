@@ -1,9 +1,10 @@
 import { ObjectID } from 'bson';
-import { connectToDatabase } from '../../util/mongodb';
+import clientPromise from '../../util/mongodb';
 const Pusher = require('pusher')
 
 export default async function handler(req, res) {
-  const {db} = await connectToDatabase();
+  const client = await clientPromise
+  const db = client.db(process.env.MONGODB_DB)
 
   const pusher = new Pusher({
     appId: '1383149',
