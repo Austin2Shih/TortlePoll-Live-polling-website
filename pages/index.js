@@ -4,6 +4,7 @@ import styles from '../styles/Home.module.css'
 import Pusher from 'pusher-js'
 import { useState, useEffect } from 'react'; 
 import clientPromise from '../util/mongodb'
+import PollForm from '../components/PollForm';
 
 // Initializing Pusher
 var pusher = new Pusher('0306e332b12262d7342d', {
@@ -64,6 +65,9 @@ export default function Home({ numClicks }) {
     <div>
       <h1>{ clicks }</h1>
       <button onClick={handle_click}>ClickMe</button>
+      <div>
+      <PollForm></PollForm>
+    </div>
     </div>
   )
 }

@@ -1,7 +1,6 @@
 import { ObjectID } from 'bson';
 import clientPromise from '../../util/mongodb';
 import pusher from '../../util/pusher';
-//const Pusher = require('pusher')
 
 export default async function handler(req, res) {
   const client = await clientPromise
