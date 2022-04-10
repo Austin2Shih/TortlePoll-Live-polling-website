@@ -66,8 +66,8 @@ export default function Home({ numClicks }) {
       <h1>{ clicks }</h1>
       <button onClick={handle_click}>ClickMe</button>
       <div>
-      <PollForm></PollForm>
-    </div>
+        <PollForm></PollForm>
+      </div>
     </div>
   )
 }
