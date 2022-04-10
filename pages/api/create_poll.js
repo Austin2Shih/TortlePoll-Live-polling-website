@@ -1,9 +1,8 @@
-import { ObjectID } from 'bson';
 import clientPromise from '../../util/mongodb';
 
 export default async function handler(req, res) {
   const client = await clientPromise
-  const db = client.db('polls')
+  const db = client.db(process.env.MONGODB_POLLS)
   const body = req.body
 
   const pollObject = {
@@ -22,7 +21,7 @@ export default async function handler(req, res) {
   pollObject['options'] = optionsList
 
   console.log(pollObject)
-  const pollID = await db.collection("created_polls").insertOne(pollObject)
+  const pollID = await db.collection("polls").insertOne(pollObject)
     .then(async (id) => {
         console.log(`poll created at id: ${id.insertedId}`)
         return id.insertedId
