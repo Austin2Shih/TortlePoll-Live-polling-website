@@ -36,7 +36,6 @@ export default function Home({ numClicks }) {
   const [clicks, setClicks] = useState(numClicks);
 
   const handle_click = async () => {
-    numClicks++;
     await fetch(`/api/handle_click`)
       .then(async response => {
         const res = await response.json()
