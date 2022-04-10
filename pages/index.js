@@ -6,8 +6,8 @@ import { useState, useEffect } from 'react';
 import clientPromise from '../util/mongodb'
 
 // Initializing Pusher
-var pusher = new Pusher('0306e332b12262d7342d', {
-  cluster: 'us3',
+var pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY, {
+  cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
   useTLS: true,
 })
 
