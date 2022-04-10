@@ -1,0 +1,23 @@
+{
+  "name": "live_polling",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "mongodb": "^4.5.0",
+    "next": "12.1.4",
+    "pusher": "^5.0.1",
+    "pusher-js": "^7.0.6",
+    "react": "18.0.0",
+    "react-dom": "18.0.0"
+  },
+  "devDependencies": {
+    "eslint": "8.13.0",
+    "eslint-config-next": "12.1.4"
+  }
+}
