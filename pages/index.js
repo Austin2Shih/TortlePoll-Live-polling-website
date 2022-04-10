@@ -11,6 +11,9 @@ var pusher = new Pusher('0306e332b12262d7342d', {
   useTLS: true,
 })
 
+// Variable to check if binded to Pusher
+var bound = false;
+
 // Subscribing to pusher channel
 const channel = pusher.subscribe('polling-development')
 
@@ -27,6 +30,7 @@ export async function getServerSideProps(context) {
   }
 }
 
+
 export default function Home({ numClicks }) {  
   const [clicks, setClicks] = useState(numClicks);
 
@@ -40,16 +44,20 @@ export default function Home({ numClicks }) {
   }
 
   useEffect(() => {
-    channel.bind('new-click', async () => {
-      const data = await fetch(`/api/get_count`)
-      .then(async response => {
-        const res = await response.json()
-        setClicks(res.count)
-      }).catch(error => {
-        console.log(error)
+    if (!bound) {
+      channel.bind('new-click', async () => {
+        console.log('api call')
+        const data = await fetch(`/api/get_count`)
+        .then(async response => {
+          const res = await response.json()
+          setClicks(res.count)
+        }).catch(error => {
+          console.log(error)
+        })
       })
-    })
-  });
+      bound = true;
+    }
+  }, []);
   
   return (
     <div>
