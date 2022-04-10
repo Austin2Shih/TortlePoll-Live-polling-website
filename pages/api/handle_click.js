@@ -26,7 +26,5 @@ export default async function handler(req, res) {
     }
   ).then(async () => pusher.trigger('polling-development', 'new-click', {}))
 
-  const connectionLog = db.serverStatus().connections
-  console.log(connectionLog)
   res.json(response);
 }
