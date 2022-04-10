@@ -31,7 +31,7 @@ export default function Home({ numClicks }) {
   const [clicks, setClicks] = useState(numClicks);
 
   const handle_click = async () => {
-    await fetch('http://localhost:3000/api/handle_click')
+    await fetch('/api/handle_click')
       .then(async response => {
         const res = await response.json()
       }).catch(error => {
@@ -41,7 +41,7 @@ export default function Home({ numClicks }) {
 
   useEffect(() => {
     channel.bind('new-click', async () => {
-      const data = await fetch('http://localhost:3000/api/get_count')
+      const data = await fetch('/api/get_count')
       .then(async response => {
         const res = await response.json()
         setClicks(res.count)
