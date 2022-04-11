@@ -13,6 +13,7 @@ export default async function handler(req, res) {
   let optionsList = []
   for (let i = 0; i < optionsCount; i++) {
     optionsList.push({
+        id: i,
         option: body[`option${i + 1}`],
         votes: 0
     })

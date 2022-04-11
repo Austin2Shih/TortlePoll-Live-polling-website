@@ -1,15 +1,28 @@
 import { useState } from 'react'; 
 
 export default function PollDisplay(props) {
-    const [data, setData] = useState(props.data)
+    const data = props.data
+    const id = data._id
 
     function voteHandler(index) {
-      return (() => {
-        await fetch(`/api/handle_vote`)
-          .then(async response => {
-            const res = await response.json()
-            setData
-          }).catch(error => {
+      console.log("raw vote handler")
+      return (async () => {
+        console.log('voteHandler')
+        await fetch(`/api/handle_vote`, {
+          method: 'POST',
+          body: JSON.stringify({
+            "_id" : id,
+            "index" : index,
+          }),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8"
+          }
+        })
+          .then(async (res) => {
+            console.log("handled vote")
+            return res
+          })
+          .catch(error => {
             console.log(error)
           })
       })
@@ -20,7 +33,7 @@ export default function PollDisplay(props) {
               {
                 data.options.map((option, index) => {
                   return (
-                    <div>
+                    <div key={index}>
                       <button onClick={voteHandler(index)}>{option.option}</button>
                       <h3>{option.votes}</h3>
                     </div>

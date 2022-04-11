@@ -6,17 +6,24 @@ export default async function handler(req, res) {
   const client = await clientPromise
   const db = client.db(process.env.MONGODB_POLLS)
 
+  const data = req.body
+  const pollID = data._id
+  const voteIndex = data.index
+
   const response = await db.collection("polls").updateOne(
     {
-      "_id": ObjectID("6251f8d9d60e3e145cba7917")
+      "_id": ObjectID(pollID),
+      "options.id" : voteIndex
     },
     {
-      $inc: { clicks: 1 }
+      $inc: { "options.$.votes" : 1 }
     },
     {
       upsert: true
     }
-  ).then(async () => pusher.trigger('polling-development', 'new-click', {}))
+  ).then(async () => {
+    pusher.trigger('polling-development', 'new-vote', {})
+  })
 
   res.json(response);
 }

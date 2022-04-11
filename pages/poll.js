@@ -11,7 +11,7 @@ var pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY, {
 })
 
 // Variable to check if binded to Pusher
-var bound = false;
+var bound = false
 
 // Subscribing to pusher channel
 const channel = pusher.subscribe('polling-development')
@@ -30,42 +30,42 @@ export async function getServerSideProps(context) {
     const output = JSON.parse(JSON.stringify(data))
     return {
         props: {
-            data: output
+            "data" : output
         }
     }
 }
 
-export default function Poll(props) {  
-
-    const [pollDisp, setPollDisp] = useState(
+export default function Poll(props) { 
+    const [pollData, setPollData] = useState(
         <PollDisplay data={props.data}></PollDisplay>
     )
-    const handle_vote = async (index) => {
-        await fetch(`/api/handle_click`)
-        .then(async response => {
-            const res = await response.json()
-        }).catch(error => {
-            console.log(error)
-        })
-    }
+    
+    const pollID = props.data._id
 
     useEffect(() => {
         if (!bound) {
-        channel.bind('new-vote', async () => {
-            const data = await fetch(`/api/get_votes`)
-            .then(async response => {
-            const res = await response.json()
-            }).catch(error => {
-            console.log(error)
-            })
-        })
-        bound = true;
+            channel.bind('new-vote', async () => {
+                const response = await fetch(`/api/get_votes`, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        "_id" : "6253aeab89ded1dbf8f6e0a5",
+                    }),
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8"
+                    }
+                })
+                console.log(response)
+                const res = await response.json()
+                console.log("poll data set")
+                setPollData(<PollDisplay data={res}></PollDisplay>)
+            })          
+            bound = true
         }
-    }, []);
+    }, [])
     
     return (
         <div>
-            {pollDisp}
+            {pollData}
         </div>
     )
 }
