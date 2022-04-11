@@ -16,13 +16,13 @@ export default function PollDisplay(props) {
             "Content-type": "application/json; charset=UTF-8"
           }
         })
-          .then(async (res) => {
-            console.log("handled vote")
-            return res
-          })
-          .catch(error => {
-            console.log(error)
-          })
+        .then(async (res) => {
+          console.log("handled vote")
+          return res
+        })
+        .catch(error => {
+          console.log(error)
+        })
       })
     }
         return (
