@@ -3,11 +3,9 @@ import { useState } from 'react';
 export default function PollDisplay(props) {
     const data = props.data
     const id = data._id
-
-    function voteHandler(index) {
-      console.log("raw vote handler")
+    
+    const voteHandler = (index) => {
       return (async () => {
-        console.log('voteHandler')
         await fetch(`/api/handle_vote`, {
           method: 'POST',
           body: JSON.stringify({

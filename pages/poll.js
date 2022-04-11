@@ -44,11 +44,11 @@ export default function Poll(props) {
 
     useEffect(() => {
         if (!bound) {
-            channel.bind('new-vote', async () => {
+            channel.bind(`new-vote-${pollID}`, async () => {
                 const response = await fetch(`/api/get_votes`, {
                     method: 'POST',
                     body: JSON.stringify({
-                        "_id" : "6253aeab89ded1dbf8f6e0a5",
+                        "_id" : `${pollID}`,
                     }),
                     headers: {
                         "Content-type": "application/json; charset=UTF-8"
