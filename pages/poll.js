@@ -45,7 +45,7 @@ export default function Poll(props) {
     useEffect(() => {
         if (!bound) {
             channel.bind(`new-vote-${pollID}`, async () => {
-                const response = await fetch(`/api/get_votes`, {
+                await fetch(`/api/get_votes`, {
                     method: 'POST',
                     body: JSON.stringify({
                         "_id" : `${pollID}`,
@@ -53,11 +53,11 @@ export default function Poll(props) {
                     headers: {
                         "Content-type": "application/json; charset=UTF-8"
                     }
+                }).then(async (response) => {
+                    await response.json().then((res) => {
+                        setPollData(<PollDisplay data={res}></PollDisplay>)
+                    })
                 })
-                console.log(response)
-                const res = await response.json()
-                console.log("poll data set")
-                setPollData(<PollDisplay data={res}></PollDisplay>)
             })          
             bound = true
         }
