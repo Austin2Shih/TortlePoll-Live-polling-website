@@ -17,7 +17,6 @@ export default function PollDisplay(props) {
           }
         })
         .then(async (res) => {
-          console.log("handled vote")
           return res
         })
         .catch(error => {

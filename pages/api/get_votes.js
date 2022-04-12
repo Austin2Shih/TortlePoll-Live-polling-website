@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   const data = await db.collection("polls").findOne(
       {
           "_id": ObjectID(id)
-      })
+      }).catch()
 
   const output = JSON.parse(JSON.stringify(data))
 

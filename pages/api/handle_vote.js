@@ -1,7 +1,6 @@
 import { ObjectID } from 'bson';
 import clientPromise from '../../util/mongodb';
 const Pusher = require('pusher')
-//import pusher from '../../util/pusher';
 
 export default async function handler(req, res) {
   const client = await clientPromise
@@ -19,6 +18,8 @@ export default async function handler(req, res) {
   const pollID = data._id
   const voteIndex = data.index
 
+  console.log("handled vote")
+
   const response = await db.collection("polls").updateOne(
     {
       "_id": ObjectID(pollID),
@@ -30,12 +31,10 @@ export default async function handler(req, res) {
     {
       upsert: true
     }
-  ).then(async () => {
-    console.log("triggering")
-    pusher.trigger('polling-development', `new-vote-${pollID}`, {})
-  }).catch((error) => {
-    console.log(error)
-    pusher.trigger('polling-development', `new-vote-${pollID}`, {})
+  ).then(() => {
+    pusher.trigger('polling-development', `new-vote-${pollID}`, {}, () => {
+      res.status(200).end('vote sent successfully')
+    })
   })
 
   res.json(response);
