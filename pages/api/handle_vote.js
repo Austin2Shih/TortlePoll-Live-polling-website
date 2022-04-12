@@ -1,12 +1,11 @@
 import { ObjectID } from 'bson';
 import clientPromise from '../../util/mongodb';
+const Pusher = require('pusher')
 //import pusher from '../../util/pusher';
 
 export default async function handler(req, res) {
   const client = await clientPromise
   const db = client.db(process.env.MONGODB_POLLS)
-
-  const Pusher = require('pusher')
 
   let pusher = new Pusher({
     appId: process.env.PUSHER_APP_ID,

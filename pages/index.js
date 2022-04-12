@@ -22,12 +22,11 @@ const channel = pusher.subscribe('polling-development')
 export async function getServerSideProps(context) {
   const client = await clientPromise
   const db = client.db(process.env.MONGODB_DB)
-  const data = await db.collection("button_clicks").find({}).toArray();
-  const numClicks = data[0].clicks;
+  const data = await db.collection('polls').find({}).toArray();
 
   return {
     props: {
-      numClicks: numClicks
+      dummy: 0
     }
   }
 }
