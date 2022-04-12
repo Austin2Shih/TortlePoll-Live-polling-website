@@ -1,6 +1,8 @@
 import { ObjectID } from 'bson';
 import clientPromise from '../../util/mongodb';
 import pusher from '../../util/pusher';
+import ably from '../../util/ably';
+
 
 export default async function handler(req, res) {
   const client = await clientPromise
@@ -10,6 +12,8 @@ export default async function handler(req, res) {
   const pollID = data._id
   const voteIndex = data.index
   
+  var channel = ably.channels.get(`new-vote-${pollID}`)
+
   const response = await db.collection("polls").updateOne(
     {
       "_id": ObjectID(pollID),
@@ -22,7 +26,8 @@ export default async function handler(req, res) {
       upsert: true
     }
   ).then(() => {
-    pusher.trigger('polling-development', `new-vote-${pollID}`, {})
+    channel.publish('greeting', {})
+    //pusher.trigger('polling-development', `new-vote-${pollID}`, {})
   })
 
   res.json(response);
