@@ -5,7 +5,7 @@ import PollDisplay from '../components/PollDisplay';
 import * as Ably from "ably";
 
 // Subscribing to messenger channel
-var ably = new Ably.Realtime(`${process.env.NEXT_PUBLIC_ABLY_API_KEY}`)
+var receiver = new Ably.Realtime(`${process.env.NEXT_PUBLIC_ABLY_API_KEY}`)
 
 // Variable to check if binded to Messenger channel
 var bound = false
@@ -38,7 +38,7 @@ export default function Poll(props) {
 
     useEffect(() => {
         if (!bound) {
-            var channel = ably.channels.get(`new-vote-${pollID}`)
+            var channel = receiver.channels.get(`new-vote-${pollID}`)
             channel.subscribe('greeting', async () => {
                 await fetch(`/api/get_votes`, {
                     method: 'POST',
