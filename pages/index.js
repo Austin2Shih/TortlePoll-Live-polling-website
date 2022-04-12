@@ -26,7 +26,7 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
-      dummy: 0
+      dummy: 1
     }
   }
 }
