@@ -10,6 +10,11 @@ export default async function handler(req, res) {
   const pollID = data._id
   const voteIndex = data.index
 
+  var channel = ably.channels.get(`poll-${pollID}`)
+  ably.connection.on('connected', () => {
+    console.log("CONNECTED")
+  })
+
   const response = await db.collection("polls").updateOne(
     {
       "_id": ObjectID(pollID),
@@ -22,7 +27,7 @@ export default async function handler(req, res) {
       upsert: true
     }
   ).then(() => {
-    var channel = ably.channels.get(`poll-${pollID}`)
+    console.log("PUBLISHING VOTE")
     channel.publish('new-vote', {})
   })
 
