@@ -22,12 +22,15 @@ export async function getServerSideProps(context) {
 export default function Home() {  
 
   return (
-    <div>
-        <Link href="/login"><a>Login</a></Link>
+    <>
+      <Head>
+
+      </Head>
+      <Link href="/login"><a>Login</a></Link>
       <div>
         <PollForm></PollForm>
       </div>
-    </div>
+    </>
   )
 }
 

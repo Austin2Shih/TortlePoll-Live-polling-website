@@ -24,7 +24,7 @@ function setTokenCookie(res, token) {
 }
 
 function getAuthToken(cookies) {
-  return cookies[TOKEN_NAME]
+    return cookies[TOKEN_NAME]
 }
 
 export default { setTokenCookie, getAuthToken }

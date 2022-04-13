@@ -38,8 +38,8 @@ export default function Poll(props) {
 
     useEffect(() => {
         if (!bound) {
-            var channel = receiver.channels.get(`new-vote-${pollID}`)
-            channel.subscribe('greeting', async () => {
+            var channel = receiver.channels.get(`poll-${pollID}`)
+            channel.subscribe('new-vote', async () => {
                 await fetch(`/api/get_votes`, {
                     method: 'POST',
                     body: JSON.stringify({
