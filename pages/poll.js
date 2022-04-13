@@ -2,13 +2,19 @@ import { useState, useEffect } from 'react';
 import { ObjectID } from 'bson';
 import clientPromise from '../util/mongodb'
 import PollDisplay from '../components/PollDisplay';
-import * as Ably from "ably";
+import Pusher from 'pusher-js'
+
+// Initializing Pusher
+var pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY, {
+    cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
+    useTLS: true,
+  })
+  
+// Variable to check if binded to Pusher
+var bound = false
 
 // Subscribing to messenger channel
-var receiver = new Ably.Realtime(`${process.env.NEXT_PUBLIC_ABLY_API_KEY}`)
-
-// Variable to check if binded to Messenger channel
-var bound = false
+const channel = pusher.subscribe('polling-development')
 
 // Getting initial database read
 export async function getServerSideProps(context) {
@@ -38,8 +44,7 @@ export default function Poll(props) {
 
     useEffect(() => {
         if (!bound) {
-            var channel = receiver.channels.get(`poll-${pollID}`)
-            channel.subscribe('new-vote', async () => {
+            channel.bind(`new-vote-${pollID}`, async () => {
                 await fetch(`/api/get_votes`, {
                     method: 'POST',
                     body: JSON.stringify({
@@ -53,7 +58,7 @@ export default function Poll(props) {
                         setPollData(<PollDisplay data={res}></PollDisplay>)
                     })
                 })
-            })             
+            })            
             bound = true
         }
     }, [])

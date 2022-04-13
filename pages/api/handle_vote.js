@@ -1,6 +1,15 @@
 import { ObjectID } from 'bson';
 import clientPromise from '../../util/mongodb';
-import * as Ably from "ably";
+//import pusher from '../../util/pusher';
+const Pusher = require('pusher');
+
+let pusher = new Pusher({
+  appId: process.env.PUSHER_APP_ID,
+  key: process.env.PUSHER_KEY,
+  secret: process.env.PUSHER_SECRET,
+  cluster: process.env.PUSHER_CLUSTER,
+  useTLS: true,
+})
 
 export default async function handler(req, res) {
   const client = await clientPromise
@@ -9,11 +18,6 @@ export default async function handler(req, res) {
   const data = req.body
   const pollID = data._id
   const voteIndex = data.index
-
-
-  const ably = new Ably.Realtime(process.env.ABLY_API_KEY);
-  var channel = ably.channels.get(`poll-${pollID}`)
-
 
   const response = await db.collection("polls").updateOne(
     {
@@ -26,8 +30,8 @@ export default async function handler(req, res) {
     {
       upsert: true
     }
-  ).then(() => {
-    channel.publish('new-vote', {})    
+  ).then(async () => {
+    pusher.trigger('polling-development', `new-vote-${pollID}`, {})  
   })
 
   res.json(response);
