@@ -1,6 +1,6 @@
 import { ObjectID } from 'bson';
 import clientPromise from '../../util/mongodb';
-import ably from '../../util/ably'
+import * as Ably from "ably";
 
 export default async function handler(req, res) {
   const client = await clientPromise
@@ -10,14 +10,10 @@ export default async function handler(req, res) {
   const pollID = data._id
   const voteIndex = data.index
 
-  var channel = ably.channels.get(`poll-${pollID}`, {
 
-    transportParams: { heartbeatInterval: 1200 }
-  })
-  ably.connection.on('connected', () => {
-    console.log("CONNECTED")
-    channel.publish('new-vote', {})
-  })
+  const ably = new Ably.Realtime(process.env.ABLY_API_KEY);
+  var channel = ably.channels.get(`poll-${pollID}`)
+
 
   const response = await db.collection("polls").updateOne(
     {
@@ -31,14 +27,7 @@ export default async function handler(req, res) {
       upsert: true
     }
   ).then(() => {
-    if (ably.connection.state === "connected") {
-      console.log("PUBLISHING VOTE")
-      channel.publish('new-vote', {})
-    } else {
-      console.log("TOO EARLY", ably.connection.state)
-    }
-    
-    
+    channel.publish('new-vote', {})    
   })
 
   res.json(response);
