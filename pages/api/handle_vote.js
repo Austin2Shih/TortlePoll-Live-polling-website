@@ -13,6 +13,7 @@ export default async function handler(req, res) {
   var channel = ably.channels.get(`poll-${pollID}`)
   ably.connection.on('connected', () => {
     console.log("CONNECTED")
+    channel.publish('new-vote', {})
   })
 
   const response = await db.collection("polls").updateOne(
@@ -27,8 +28,14 @@ export default async function handler(req, res) {
       upsert: true
     }
   ).then(() => {
-    console.log("PUBLISHING VOTE")
-    channel.publish('new-vote', {})
+    if (ably.connection.state === "connected") {
+      console.log("PUBLISHING VOTE")
+      channel.publish('new-vote', {})
+    } else {
+      console.log("TOO EARLY", ably.connection.state)
+    }
+    
+    
   })
 
   res.json(response);
