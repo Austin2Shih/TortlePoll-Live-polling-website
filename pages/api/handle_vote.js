@@ -30,7 +30,11 @@ export default async function handler(req, res) {
       upsert: true
     }
   ).then(async () => {
-    pusher.trigger('polling-development', `new-vote-${pollID}`, {})
+    const res = await pusher.trigger('polling-development', `new-vote-${pollID}`, {}).then((r) => {
+      console.log(r)
+    }).catch((error) => {
+      console.log(error)
+    })
   })
 
   res.json(response);
