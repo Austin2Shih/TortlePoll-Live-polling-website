@@ -6,13 +6,12 @@ let pusher = new Pusher({
   secret: process.env.PUSHER_SECRET,
   cluster: process.env.PUSHER_CLUSTER,
   keepAlive: true,
-  timeout: 5000
 })
 
 module.exports = (req, res) => {
     const data = req.body
     const pollID = data._id
-    pusher.trigger('polling-development', `new-vote-${pollID}`);
+    pusher.trigger('polling-development', `new-vote-${pollID}`, {});
 
     res.json(data)
 };
