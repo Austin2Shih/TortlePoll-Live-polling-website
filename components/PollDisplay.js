@@ -23,22 +23,22 @@ export default function PollDisplay(props) {
           console.log(error)
         })
 
-        // await fetch(`/api/pusher-trigger`, {
-        //   method: 'POST',
-        //   body: JSON.stringify({
-        //     "_id" : id,
-        //     "index" : index,
-        //   }),
-        //   headers: {
-        //     "Content-type": "application/json; charset=UTF-8"
-        //   }
-        // })
-        // .then(async (res) => {
-        //   return res
-        // })
-        // .catch(error => {
-        //   console.log(error)
-        // })
+        await fetch(`/api/pusher-trigger`, {
+          method: 'POST',
+          body: JSON.stringify({
+            "_id" : id,
+            "index" : index,
+          }),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8"
+          }
+        })
+        .then(async (res) => {
+          return res
+        })
+        .catch(error => {
+          console.log(error)
+        })
       })
     }
         return (

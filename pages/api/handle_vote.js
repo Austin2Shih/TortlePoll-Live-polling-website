@@ -8,8 +8,6 @@ let pusher = new Pusher({
   key: process.env.PUSHER_KEY,
   secret: process.env.PUSHER_SECRET,
   cluster: process.env.PUSHER_CLUSTER,
-  keepAlive: true,
-  timeout: 5000
 })
 
 export default async function handler(req, res) {
@@ -32,8 +30,7 @@ export default async function handler(req, res) {
       upsert: true
     }
   ).then(async () => {
-    pusher.trigger('polling-development', `new-vote`, {})
-    pusher.disconnect()
+    pusher.trigger('polling-development', `new-vote-${pollID}`, {})
   })
 
   res.json(response);
