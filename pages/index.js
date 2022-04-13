@@ -3,6 +3,7 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import clientPromise from '../util/mongodb'
 import PollForm from '../components/PollForm';
+import Link from 'next/link'
 
 // Getting initial database read
 export async function getServerSideProps(context) {
@@ -22,6 +23,7 @@ export default function Home() {
 
   return (
     <div>
+        <Link href="/login"><a>Login</a></Link>
       <div>
         <PollForm></PollForm>
       </div>
