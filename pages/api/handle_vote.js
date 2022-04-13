@@ -10,7 +10,10 @@ export default async function handler(req, res) {
   const pollID = data._id
   const voteIndex = data.index
 
-  var channel = ably.channels.get(`poll-${pollID}`)
+  var channel = ably.channels.get(`poll-${pollID}`, {
+
+    transportParams: { heartbeatInterval: 1200 }
+  })
   ably.connection.on('connected', () => {
     console.log("CONNECTED")
     channel.publish('new-vote', {})
