@@ -8,10 +8,22 @@ let pusher = new Pusher({
   keepAlive: true
 })
 
+let test = new Pusher({
+    appId: process.env.PUSHER_APP_ID,
+    key: process.env.PUSHER_KEY,
+    secret: process.env.PUSHER_SECRET,
+    cluster: process.env.PUSHER_CLUSTER,
+    keepAlive: true
+  })
+
 module.exports = (req, res) => {
     const data = req.body
     const pollID = data._id
     pusher.trigger('polling-development', `new-vote-${pollID}`, data, () => {
+        res.status(200).end('sent event successfully');
+    });
+
+    test.trigger('polling-development', `new-vote-${pollID}`, data, () => {
         res.status(200).end('sent event successfully');
     });
 

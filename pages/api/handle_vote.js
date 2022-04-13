@@ -8,6 +8,7 @@ let pusher = new Pusher({
   key: process.env.PUSHER_KEY,
   secret: process.env.PUSHER_SECRET,
   cluster: process.env.PUSHER_CLUSTER,
+  keepAlive: true
 })
 
 export default async function handler(req, res) {
