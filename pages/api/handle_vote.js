@@ -29,6 +29,9 @@ export default async function handler(req, res) {
     }
   ).then(() => {
     channel.publish('new-vote', {})
+    channel.publish('new-vote', {})
+    channel.publish('new-vote', {})
+    channel.publish('new-vote', {})
   })
 
   res.json(response);
