@@ -30,7 +30,7 @@ export default async function handler(req, res) {
       upsert: true
     }
   ).then(async () => {
-    //pusher.trigger('polling-development', `new-vote-${pollID}`, {})  
+    pusher.trigger('polling-development', `new-vote-${pollID}`, {})  
   })
 
   res.json(response);
