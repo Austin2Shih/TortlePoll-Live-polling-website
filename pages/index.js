@@ -3,7 +3,7 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import clientPromise from '../util/mongodb'
 import PollForm from '../components/PollForm';
-import Link from 'next/link'
+import { useUser } from '../util/auth/useUser';
 
 // Getting initial database read
 export async function getServerSideProps(context) {
@@ -20,16 +20,14 @@ export async function getServerSideProps(context) {
 
 
 export default function Home() {  
-
+  const { user, logout } = useUser();
   return (
     <>
-      <Head>
-
-      </Head>
-      <Link href="/login"><a>Login</a></Link>
       <div>
         <PollForm></PollForm>
       </div>
+      <div>Public</div>
+      <div><a href="/dashboard">Go to Private</a></div>
     </>
   )
 }

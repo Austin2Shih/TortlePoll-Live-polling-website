@@ -1,41 +1,43 @@
-import { Magic } from 'magic-sdk'
-import { useRouter } from 'next/router'
-
-export default function Login() {
-  const router = useRouter()
-  const handleSubmit = async (event) => {
-    event.preventDefault()
-    
-    const { elements } = event.target
-
-    // Sending user to Magic Login
-
-    const did = await new Magic(process.env.NEXT_PUBLIC_MAGIC_PUB_KEY)
-      .auth
-      .loginWithMagicLink({email: elements.email.value})
+import initFirebase from '../util/firebase';
+import { setUserCookie } from '../util/auth/userCookie';
+import { mapUserData } from '../util/auth/useUser';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import StyledFirebaseAuth from 'firebaseui';
+import { getAuth } from 'firebase/auth';
 
 
-    // Once we have the token from magic,
-    // update our own database
-    
-    const authRequest = await fetch('/api/login', {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${did}`}
-    })
-
-    if (authRequest.ok) {
-        // We successfully logged in, our API
-        // set authorization cookies and now we
-        // can redirect to the dashboard!
-        router.push('/dashboard')
-      } else { /* handle errors */ }
+initFirebase();
+const firebaseAuthConfig = ({ signInSuccessUrl }) => ({
+  signInFlow: 'popup',
+  signInOptions: [
+    {
+      provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+      requireDisplayName: false
+    },
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+  ],
+  signInSuccessUrl,
+  credentialHelper: 'none',
+  callbacks: {
+    signInSuccessWithAuthResult: async ({ user }, redirectUrl) => {
+      const userData = await mapUserData(user);
+      setUserCookie(userData);
+    }
   }
+});
 
+const FirebaseAuth = () => {
+  const signInSuccessUrl = "/dashboard"
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="email">Email</label>
-      <input name="email" type="email" />
-      <button>Log in</button>
-    </form>
-  )
-}
+    <div>
+      <StyledFirebaseAuth
+        uiConfig={firebaseAuthConfig({ signInSuccessUrl })}
+        firebaseAuth={getAuth(firebase)}
+        signInSuccessUrl={signInSuccessUrl}
+      />
+    </div>
+  );
+};
+
+export default FirebaseAuth;
