@@ -1,12 +1,25 @@
-import useAuth from "../hooks/useAuth";
+import withAuth from '../util/auth/withAuth';
+import { useUser } from '../util/auth/useUser';
+import { useRouter } from "next/router";
+import { signOut } from 'firebase/auth';
+import { auth } from '../util/firebase';
 
-export default function Dashboard() {
-  const { user, loading } = useAuth();
+const Dashboard = () => {
+  const { user, logout } = useUser();
+  const router = useRouter();
 
   return (
-    <>
-      <h1>Dashboard</h1>
-      {loading ? "Loading..." : user.email}
-    </>
-  );
+    <div >
+      <div>Private</div>
+      {
+        user?.email &&
+        <div>
+          <div>Email: {user.email}</div>
+          <button onClick={logout('/')}>Logout</button>
+        </div> 
+      }
+    </div>
+  )
 }
+
+export default withAuth(Dashboard);
