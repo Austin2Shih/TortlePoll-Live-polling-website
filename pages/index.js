@@ -1,9 +1,7 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
 import clientPromise from '../util/mongodb'
 import PollForm from '../components/PollForm';
 import { useUser } from '../util/auth/useUser';
+import Link from 'next/link';
 
 // Getting initial database read
 export async function getServerSideProps(context) {
@@ -31,7 +29,7 @@ export default function Home() {
         <div>Public {user.email}</div>
       }
       
-      <div><a href="/dashboard">Go to Private</a></div>
+      <div><Link href="/dashboard">Private access</Link></div>
     </>
   )
 }

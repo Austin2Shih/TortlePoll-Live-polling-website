@@ -49,7 +49,7 @@ export default function FirebaseAuth() {
         <p>
           Don't have an account{" "}
           <Link href="/signup">
-            <a>sign Up</a>
+            Sign Up
           </Link>
         </p>
     </div>
