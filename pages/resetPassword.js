@@ -12,7 +12,7 @@ export default function FirebaseAuth() {
 
   function handleReset(e) {
     e.preventDefault();
-    sendPasswordResetEmail(auth, email, password)
+    sendPasswordResetEmail(auth, email)
       .then(() => {
         setMessage("Check your email to reset your password")
       }).catch((error) => {

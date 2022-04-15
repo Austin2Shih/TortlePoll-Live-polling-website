@@ -10,12 +10,32 @@ export default function SignUp() {
     const router = useRouter();
     const [error, setError] = useState(null);
 
+    async function create_user(user) {
+      const data = {
+        email: user.user.email,
+        info : {
+          ethnicity: null,
+          gender: null,
+          birthday: null,
+        },
+        polls: [],
+        votedPolls: []
+      }
+      await fetch("/api/create_user", {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8"
+        }
+      })
+    }
 
     function handleSignUp(e) {
       e.preventDefault();
       if(passwordOne === passwordTwo)
         createUserWithEmailAndPassword(auth, email, passwordOne)
-        .then((userCredential) => {
+        .then(async (userCredential) => {
+          create_user(userCredential)
           console.log("Success. The user is created in Firebase")
           router.push("/dashboard");
         })
