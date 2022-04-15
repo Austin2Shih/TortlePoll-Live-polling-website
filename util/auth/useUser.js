@@ -1,17 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import {firebase} from 'firebase/app';
-import { getAuth, onIdTokenChanged } from 'firebase/auth';
 
-import initFirebase from '../firebase';
+import auth from '../firebase';
 
 import {
   removeUserCookie,
   setUserCookie,
   getUserFromCookie
 } from './userCookie';
-
-initFirebase();
 
 export const mapUserData = async user => {
   const { uid, email } = user;
@@ -41,8 +37,7 @@ const useUser = () => {
   };
 
   useEffect(() => {
-      console.log(firebase)
-        const cancelAuthListener = getAuth(firebase)
+        const cancelAuthListener = auth
         .onIdTokenChanged(async userToken => {
             if (userToken) {
             const userData = await mapUserData(userToken);

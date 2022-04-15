@@ -1264,7 +1264,7 @@
   dependencies:
     "locate-path" "^2.0.0"
 
-"firebase@^9.1.3", "firebase@^9.6.10":
+"firebase@^9.0.0", "firebase@^9.6.10":
   "integrity" "sha512-pnWXhH2J/O5To/TXEp7Dx1nSKkDRspl1bo4f4p6f2noVrn3lvz+cbQNM7DTT0xyA0RsNM/V7aSv3ZbAQj8Od3Q=="
   "resolved" "https://registry.npmjs.org/firebase/-/firebase-9.6.10.tgz"
   "version" "9.6.10"
@@ -1296,10 +1296,10 @@
     "@firebase/storage-compat" "0.1.12"
     "@firebase/util" "1.5.1"
 
-"firebaseui@^6.0.1":
-  "integrity" "sha512-SMNCFt/xns3mnvd0hImEDu7di5fqRU3MVyIaXpVEfg6v0bH6f3m+YybivU7KElRUT/47DHMn++D8MrZYYnoN5g=="
-  "resolved" "https://registry.npmjs.org/firebaseui/-/firebaseui-6.0.1.tgz"
-  "version" "6.0.1"
+"firebaseui@^0.600.0":
+  "integrity" "sha512-5iaRcuaaXTmCIU+VNJHIerzz1bgcfGmPTZCFL/yLHsQ6o3KeUggr/mY2rmMh2aMT38UgpyV5QndwEAZDiOeOWg=="
+  "resolved" "https://registry.npmjs.org/firebaseui/-/firebaseui-0.600.0.tgz"
+  "version" "0.600.0"
   dependencies:
     "dialog-polyfill" "^0.4.7"
     "material-design-lite" "^1.2.0"

@@ -1,43 +1,46 @@
-import initFirebase from '../util/firebase';
 import { setUserCookie } from '../util/auth/userCookie';
 import { mapUserData } from '../util/auth/useUser';
-import firebase from 'firebase/app';
 import 'firebase/auth';
-import StyledFirebaseAuth from 'firebaseui';
-import { getAuth } from 'firebase/auth';
+import React, { useState } from "react";
+import {auth} from '../util/firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 
-initFirebase();
-const firebaseAuthConfig = ({ signInSuccessUrl }) => ({
-  signInFlow: 'popup',
-  signInOptions: [
-    {
-      provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-      requireDisplayName: false
-    },
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-  ],
-  signInSuccessUrl,
-  credentialHelper: 'none',
-  callbacks: {
-    signInSuccessWithAuthResult: async ({ user }, redirectUrl) => {
-      const userData = await mapUserData(user);
-      setUserCookie(userData);
-    }
+export default function FirebaseAuth() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("")
+
+  function handleLogin(e) {
+    e.preventDefault();
+    console.log(auth, email, password)
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        console.log("logged in!")
+      }).catch((error) => {
+        console.log("ERROR: ", error)
+      })
   }
-});
 
-const FirebaseAuth = () => {
-  const signInSuccessUrl = "/dashboard"
   return (
     <div>
-      <StyledFirebaseAuth
-        uiConfig={firebaseAuthConfig({ signInSuccessUrl })}
-        firebaseAuth={getAuth(firebase)}
-        signInSuccessUrl={signInSuccessUrl}
-      />
+        <form onSubmit={handleLogin}>
+          <label>Email</label>
+          <input 
+            onChange={(e) => setEmail(e.target.value)} 
+            value={email}
+            type="email" 
+            placeholder="Email">
+          </input>
+          <label>Password</label>
+          <input 
+            onChange={(e) => setPassword(e.target.value)} 
+            value={password}
+            type="password" 
+            placeholder="Password">
+          </input>
+          <input type="submit"></input>
+        </form>
     </div>
   );
-};
+}
 
-export default FirebaseAuth;
