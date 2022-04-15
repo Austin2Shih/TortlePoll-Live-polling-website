@@ -1,4 +1,5 @@
 import { useState } from 'react'; 
+import Link from 'next/link';
 
 function makeOptionsList(count) {
   const optionsList = []
@@ -72,7 +73,7 @@ export default function PollForm() {
           <button type="text" onClick={increaseList}> + </button>
           <button type="text" onClick={decreaseList}> - </button>
           <hr></hr>
-          <a href={pollLink} target="_blank" rel="noreferrer noopener">{linkText}</a>
+          <Link href={pollLink? pollLink: ""} target="_blank" rel="noreferrer noopener">{linkText}</Link>
       </div>
     )
   }

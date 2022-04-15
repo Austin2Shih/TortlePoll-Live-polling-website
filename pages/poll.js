@@ -62,7 +62,7 @@ export default function Poll(props) {
                        
             bound = true
         }
-    }, [])
+    }, [pollID])
     
     return (
         <div>
