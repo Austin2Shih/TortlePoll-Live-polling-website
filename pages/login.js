@@ -1,28 +1,34 @@
-import { setUserCookie } from '../util/auth/userCookie';
-import { mapUserData } from '../util/auth/useUser';
-import 'firebase/auth';
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 import {auth} from '../util/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import Link from 'next/link';
+
 
 
 export default function FirebaseAuth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("")
+  const [error, setError] = useState(null)
+  const router = useRouter();
 
   function handleLogin(e) {
     e.preventDefault();
     console.log(auth, email, password)
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      .then(async (userCredential) => {
         console.log("logged in!")
+        console.log(userCredential)
+        router.push("/dashboard");
       }).catch((error) => {
+        setError(error.message)
         console.log("ERROR: ", error)
       })
   }
 
   return (
     <div>
+        {error}
         <form onSubmit={handleLogin}>
           <label>Email</label>
           <input 
@@ -40,6 +46,12 @@ export default function FirebaseAuth() {
           </input>
           <input type="submit"></input>
         </form>
+        <p>
+          Don't have an account{" "}
+          <Link href="/signup">
+            <a>sign Up</a>
+          </Link>
+        </p>
     </div>
   );
 }

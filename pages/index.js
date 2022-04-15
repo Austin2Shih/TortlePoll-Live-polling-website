@@ -26,7 +26,11 @@ export default function Home() {
       <div>
         <PollForm></PollForm>
       </div>
-      <div>Public</div>
+      {
+        user?.email &&
+        <div>Public {user.email}</div>
+      }
+      
       <div><a href="/dashboard">Go to Private</a></div>
     </>
   )
