@@ -45,9 +45,15 @@ export default function FirebaseAuth() {
           <input type="submit"></input>
         </form>
         <p>
-          Don't have an account{" "}
+          {"Don't have an account "}
           <Link href="/signup">
             <a>sign Up</a>
+          </Link>
+        </p>
+        <p>
+          {"Forgot password "}
+          <Link href="/resetPassword">
+            <a>Reset Password</a>
           </Link>
         </p>
     </div>
