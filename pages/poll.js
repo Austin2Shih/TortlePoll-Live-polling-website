@@ -64,5 +64,3 @@ export default function Poll(props) {
         </div>
     )
 }
-
-
