@@ -55,7 +55,7 @@ export default function PollForm() {
       })
   
       const res = await response.json()
-  
+ 
       setPollLink(`/poll?id=${res.pollID}`)
       setLinkText("Access your poll here!")
     }
