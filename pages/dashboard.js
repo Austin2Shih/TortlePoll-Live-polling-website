@@ -2,10 +2,9 @@ import withAuth from '../util/auth/withAuth';
 import { useUser } from '../util/auth/useUser';
 import { useRouter } from "next/router";
 
-
 const Dashboard = () => {
   const { user, logout } = useUser();
-
+  const router = useRouter();
   return (
     <div >
       <div>Private</div>
@@ -16,6 +15,7 @@ const Dashboard = () => {
           <button onClick={logout('/')}>Logout</button>
         </div> 
       }
+      
     </div>
   )
 }

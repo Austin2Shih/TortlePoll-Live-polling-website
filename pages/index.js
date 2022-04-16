@@ -16,21 +16,21 @@ export async function getServerSideProps(context) {
   }
 }
 
-
 export default function Home() {  
-  const { user, logout } = useUser();
+  const { user, logout} = useUser();
+  
   return (
-    <>
+    <div>
       <div>
         <PollForm></PollForm>
       </div>
       {
-        user?.email &&
-        <div>Public {user.email}</div>
+        user?.mongoData &&
+        <div>Public {JSON.stringify(user.mongoData)}</div>
       }
       
-      <div><Link href="/dashboard">Private access</Link></div>
-    </>
+      <div><Link href="/dashboard">Go to Dashboard</Link></div>
+    </div>
   )
 }
 

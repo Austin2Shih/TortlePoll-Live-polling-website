@@ -4,8 +4,6 @@ import {auth} from '../util/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import Link from 'next/link';
 
-
-
 export default function FirebaseAuth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("")
@@ -50,6 +48,12 @@ export default function FirebaseAuth() {
           {"Don't have an account?"}
           <Link href="/signup">
             Sign Up
+          </Link>
+        </p>
+        <p>
+          {"Forgot password "}
+          <Link href="/resetPassword">
+            <a>Reset Password</a>
           </Link>
         </p>
     </div>

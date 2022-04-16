@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { getIdToken} from 'firebase/auth';
 import {auth} from '../firebase';
 
 import {
@@ -12,14 +11,28 @@ import {
 export const mapUserData = async user => {
   const { uid, email } = user;
   const token = await user.getIdToken(true);
+  const response = await fetch(`/api/get_user`, {
+    method: 'POST',
+    body: JSON.stringify({
+        "email" : `${user.email}`,
+    }),
+    headers: {
+        "Content-type": "application/json; charset=UTF-8"
+    }
+  }).then(async (response) => {
+    const res = await response.json()
+    return res
+  })
   return {
     id: uid,
     email,
-    token
+    token,
+    mongoData: response
   };
 };
 
   
+
 const useUser = () => {
   const [user, setUser] = useState();
   const router = useRouter();
@@ -56,7 +69,6 @@ const useUser = () => {
     setUser(userFromCookie);
     return () => cancelAuthListener;
   }, []);
-
   return { user, logout };
 };
 
