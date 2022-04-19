@@ -9,7 +9,6 @@ export async function getServerSideProps(context) {
 
   return {
       props: {
-          "data" : output,
           "url" : redirectLink
       }
   }
@@ -17,6 +16,8 @@ export async function getServerSideProps(context) {
 
 export default function Dashboard(props){
   const { user, logout } = useUser();
+  const router = useRouter();
+
 
   useEffect( ()=> {
     auth.onAuthStateChanged((authUser) => {
