@@ -2,6 +2,7 @@ import clientPromise from '../util/mongodb'
 import PollForm from '../components/PollForm';
 import { useUser } from '../util/auth/useUser';
 import Link from 'next/link';
+import withAuth from '../util/auth/withAuth';
 
 // Getting initial database read
 export async function getServerSideProps(context) {
@@ -16,7 +17,7 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default function Home() {  
+function Home() {  
   const { user, logout} = useUser();
   
   return (
@@ -35,3 +36,4 @@ export default function Home() {
 }
 
 
+export default withAuth(Home);

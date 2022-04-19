@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'; 
 import { ObjectID } from 'bson';
 import clientPromise from '../util/mongodb'
-import PollDisplay from '../components/PollDisplay';
+import VoteDisplay from '../components/VoteDisplay';
 import Pusher from 'pusher-js'
 import { useUser } from '../util/auth/useUser';
 import { useRouter } from "next/router";
@@ -39,15 +39,14 @@ export async function getServerSideProps(context) {
     }
 }
 
-
-function Poll(props) { 
+function Vote(props) { 
     const {user, logout} = useUser();
     const router = useRouter();
-    const [pollId, setPollId] = useState()
 
     const [pollData, setPollData] = useState(
-        <PollDisplay data={props.data}></PollDisplay>
+        <VoteDisplay data={props.data}></VoteDisplay>
     )
+
     const pollID = props.data._id
 
     useEffect(() => {
@@ -63,7 +62,7 @@ function Poll(props) {
                     }
                 }).then(async (response) => {
                     await response.json().then((res) => {
-                        setPollData(<PollDisplay data={res}></PollDisplay>)
+                        setPollData(<VoteDisplay data={res}></VoteDisplay>)
                     })
                 })
             }) 
@@ -72,16 +71,12 @@ function Poll(props) {
         }
 
         if (user?.mongoData && pollID) {
-            let voted = false;
             const votedPolls = user.mongoData.votedPolls
             votedPolls.forEach((poll) => {
                 if (poll.id == pollID) {
-                    voted = true;
+                    router.push(`/poll?id=${pollID}`)
                 }
             })
-            if (!voted) {
-                router.push(`/vote?id=${pollID}`)
-            }
         }
     }, [pollID, user])
     
@@ -92,4 +87,4 @@ function Poll(props) {
     )
 }
 
-export default withAuth(Poll)
+export default withAuth(Vote)

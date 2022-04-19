@@ -10,6 +10,5 @@ export default async function handler(req, res) {
       }).catch()
 
   const output = JSON.parse(JSON.stringify(data))
-  console.log(output)
   res.json(output);
 }

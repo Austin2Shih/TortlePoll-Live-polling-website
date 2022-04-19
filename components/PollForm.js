@@ -1,5 +1,6 @@
 import { useState } from 'react'; 
 import Link from 'next/link';
+import { useUser } from '../util/auth/useUser';
 
 function makeOptionsList(count) {
   const optionsList = []
@@ -18,7 +19,7 @@ function makeOptionsList(count) {
 var listSize = 2;
 
 export default function PollForm() {
-
+  const { user } = useUser()
   const [options, setOptions] = useState(makeOptionsList(listSize))
   const [pollLink, setPollLink] = useState(null)
   const [linkText, setLinkText] = useState("")
@@ -36,10 +37,15 @@ export default function PollForm() {
     }
 
     async function onSubmit(form) {
+      form.preventDefault()
       const target = form.target
-      let data = {"question" : target.question.value}
+      let data = {
+        "userId" : user.mongoData._id,
+        "question" : target.question.value,
+        "private" : target.private.checked
+      }
       let options = []
-      for (let i = 1; i < target.length-1; i++) {
+      for (let i = 1; i < target.length-2; i++) {
         options.push({
           id: (i - 1),
           option: target[i].value,
@@ -63,17 +69,22 @@ export default function PollForm() {
 
     return (
       <div>
-          <iframe name="bgframe" id="bgframe" style={{display: "none"}}></iframe>
-          <form action="" onSubmit={onSubmit} method="post" target="bgframe">
+          <form onSubmit={onSubmit}>
             <label htmlFor="question">Poll Question</label>
             <input type="text" id="question" name="question" required />
             {options}  
+            <label></label>
+            <label htmlFor="private">Private</label>
+            <input type='checkbox' id="private" name="private" value="private"></input>
             <button type="submit">Submit</button>
           </form>
-          <button type="text" onClick={increaseList}> + </button>
-          <button type="text" onClick={decreaseList}> - </button>
+          <button type="text" onClick={increaseList}> Add Option </button>
+          <button type="text" onClick={decreaseList}> Remove Option </button>
           <hr></hr>
-          <Link href={pollLink? pollLink: ""} target="_blank" rel="noreferrer noopener">{linkText}</Link>
+          { 
+            pollLink &&
+            <Link href={pollLink} target="_blank" rel="noreferrer noopener">{linkText}</Link>
+          }
       </div>
     )
   }
