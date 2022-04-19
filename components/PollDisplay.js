@@ -1,9 +1,5 @@
-import { useState } from 'react'; 
-
 export default function PollDisplay(props) {
-    const data = props.data
-    const id = data._id
-    
+    const data = props.data    
         return (
           <div>
               <h1>{data.question}</h1>

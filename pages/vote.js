@@ -5,8 +5,7 @@ import VoteDisplay from '../components/VoteDisplay';
 import Pusher from 'pusher-js'
 import { useUser } from '../util/auth/useUser';
 import { useRouter } from "next/router";
-import withAuth from '../util/auth/withAuth';
-
+import { auth } from '../util/firebase';
 
 // Initializing Pusher
 var pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY, {
@@ -22,6 +21,7 @@ const channel = pusher.subscribe('polling-development')
 
 // Getting initial database read
 export async function getServerSideProps(context) {
+    const redirectLink = context.resolvedUrl
     const client = await clientPromise
     const db = client.db(process.env.MONGODB_POLLS)
     const {query} = context
@@ -34,12 +34,13 @@ export async function getServerSideProps(context) {
     const output = JSON.parse(JSON.stringify(data))
     return {
         props: {
-            "data" : output
+            "data" : output,
+            "url" : redirectLink
         }
     }
 }
 
-function Vote(props) { 
+export default function Vote(props) { 
     const {user, logout} = useUser();
     const router = useRouter();
 
@@ -50,6 +51,12 @@ function Vote(props) {
     const pollID = props.data._id
 
     useEffect(() => {
+        auth.onAuthStateChanged((authUser) => {
+            if (!authUser) {
+                router.push(`/login?redirect=${props.url}`);
+            }
+        })
+
         if (!bound) {
             channel.bind(`new-vote-${pollID}`, async () => {
                 await fetch(`/api/get_votes`, {
@@ -78,7 +85,7 @@ function Vote(props) {
                 }
             })
         }
-    }, [pollID, user])
+    }, [pollID, user, auth])
     
     return (
         <div>
@@ -86,5 +93,3 @@ function Vote(props) {
         </div>
     )
 }
-
-export default withAuth(Vote)

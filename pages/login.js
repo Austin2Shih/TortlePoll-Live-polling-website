@@ -4,7 +4,21 @@ import {auth} from '../util/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import Link from 'next/link';
 
-export default function FirebaseAuth() {
+export async function getServerSideProps(context) {
+  const {query} = context
+  let redirectLink = query.redirect
+  if (!redirectLink) {
+      redirectLink = '/'
+  }
+
+  return {
+      props: {
+          "url" : redirectLink
+      }
+  }
+}
+
+export default function FirebaseAuth(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("")
   const [error, setError] = useState(null)
@@ -16,8 +30,7 @@ export default function FirebaseAuth() {
     signInWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
         console.log("logged in!")
-        console.log(userCredential)
-        router.push("/dashboard");
+        router.push(props.url);
       }).catch((error) => {
         setError(error.message)
         console.log("ERROR: ", error)
@@ -46,13 +59,13 @@ export default function FirebaseAuth() {
         </form>
         <p>
           {"Don't have an account?"}
-          <Link href="/signup">
+          <Link href={`/signup?redirect=${props.url}`}>
             Sign Up
           </Link>
         </p>
         <p>
           {"Forgot password "}
-          <Link href="/resetPassword">
+          <Link href={`/resetPassword?redirect=${props.url}`}>
             <a>Reset Password</a>
           </Link>
         </p>

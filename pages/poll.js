@@ -5,7 +5,8 @@ import PollDisplay from '../components/PollDisplay';
 import Pusher from 'pusher-js'
 import { useUser } from '../util/auth/useUser';
 import { useRouter } from "next/router";
-import withAuth from '../util/auth/withAuth';
+import DataChart from '../components/DataChart'
+import { auth } from '../util/firebase';
 
 
 // Initializing Pusher
@@ -22,6 +23,8 @@ const channel = pusher.subscribe('polling-development')
 
 // Getting initial database read
 export async function getServerSideProps(context) {
+    const redirectLink = context.resolvedUrl
+
     const client = await clientPromise
     const db = client.db(process.env.MONGODB_POLLS)
     const {query} = context
@@ -34,23 +37,32 @@ export async function getServerSideProps(context) {
     const output = JSON.parse(JSON.stringify(data))
     return {
         props: {
-            "data" : output
+            "data" : output,
+            "url" : redirectLink
         }
     }
 }
 
 
-function Poll(props) { 
+export default function Poll(props) { 
     const {user, logout} = useUser();
     const router = useRouter();
-    const [pollId, setPollId] = useState()
 
     const [pollData, setPollData] = useState(
         <PollDisplay data={props.data}></PollDisplay>
     )
+    const [chart, setChart] = useState(
+        <DataChart data={props.data}></DataChart>
+    )
     const pollID = props.data._id
 
     useEffect(() => {
+        auth.onAuthStateChanged((authUser) => {
+            if (!authUser) {
+                router.push(`/login?redirect=${props.url}`);
+            }
+        })
+
         if (!bound) {
             channel.bind(`new-vote-${pollID}`, async () => {
                 await fetch(`/api/get_votes`, {
@@ -64,6 +76,7 @@ function Poll(props) {
                 }).then(async (response) => {
                     await response.json().then((res) => {
                         setPollData(<PollDisplay data={res}></PollDisplay>)
+                        setChart(<DataChart data={res}></DataChart>)
                     })
                 })
             }) 
@@ -88,8 +101,7 @@ function Poll(props) {
     return (
         <div>
             {pollData}
+            {chart}
         </div>
     )
 }
-
-export default withAuth(Poll)

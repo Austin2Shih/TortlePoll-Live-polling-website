@@ -3,6 +3,20 @@ import { useRouter } from 'next/router';
 import { createUserWithEmailAndPassword } from "firebase/auth"
 import { auth } from '../util/firebase';
 
+export async function getServerSideProps(context) {
+  const {query} = context
+  let redirectLink = query.redirect
+  if (!redirectLink) {
+      redirectLink = '/'
+  }
+
+  return {
+      props: {
+          "url" : redirectLink
+      }
+  }
+}
+
 export default function SignUp() {
     const [email, setEmail] = useState("");
     const [passwordOne, setPasswordOne] = useState("");
@@ -21,7 +35,7 @@ export default function SignUp() {
         polls: [],
         votedPolls: []
       }
-      await fetch("/api/create_user", {
+      return await fetch("/api/create_user", {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -35,9 +49,13 @@ export default function SignUp() {
       if(passwordOne === passwordTwo)
         createUserWithEmailAndPassword(auth, email, passwordOne)
         .then(async (userCredential) => {
-          create_user(userCredential)
-          console.log("Success. The user is created in Firebase")
-          router.push("/dashboard");
+          await create_user(userCredential).then(() => {
+            console.log("Success. The user is created in Firebase")
+            setTimeout(() => {  
+              router.push(`/settings?redirect=${props.url}`); 
+            }, 3000);
+            router.push(`/user_info?redirect=${props.url}`);
+          }) 
         })
         .catch(error => {
           // An error occurred. Set error message to be displayed to user

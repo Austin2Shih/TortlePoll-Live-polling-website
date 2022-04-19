@@ -42,14 +42,17 @@ export default function PollForm() {
       let data = {
         "userId" : user.mongoData._id,
         "question" : target.question.value,
-        "private" : target.private.checked
+        "private" : target.private.checked,
+        "votes" : [],
+
       }
       let options = []
       for (let i = 1; i < target.length-2; i++) {
         options.push({
           id: (i - 1),
           option: target[i].value,
-          votes: 0
+          votes: 0,
+          "voters" : []
         })
       }
       data["options"] = options

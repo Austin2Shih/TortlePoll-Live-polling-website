@@ -4,6 +4,20 @@ import {auth} from '../util/firebase';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import Link from 'next/link';
 
+export async function getServerSideProps(context) {
+  const {query} = context
+  let redirectLink = query.redirect
+  if (!redirectLink) {
+      redirectLink = '/'
+  }
+
+  return {
+      props: {
+          "url" : redirectLink
+      }
+  }
+}
+
 export default function FirebaseAuth() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("")
@@ -14,7 +28,10 @@ export default function FirebaseAuth() {
     e.preventDefault();
     sendPasswordResetEmail(auth, email)
       .then(() => {
-        setMessage("Check your email to reset your password")
+        setMessage("Email sent! Redirecting you to login...")
+        setTimeout(() => {  
+          router.push(`/login?redirect=${props.url}`); 
+        }, 3000);
       }).catch((error) => {
         setError(error.message)
         console.log("ERROR: ", error)
@@ -24,6 +41,7 @@ export default function FirebaseAuth() {
   return (
     <div>
         {error}
+        {message}
         <form onSubmit={handleReset}>
           <label>Email</label>
           <input 

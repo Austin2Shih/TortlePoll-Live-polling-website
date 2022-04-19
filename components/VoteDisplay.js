@@ -4,17 +4,11 @@ import { useUser } from '../util/auth/useUser';
 
 export default function VoteDisplay(props) {
     const {user, logout} = useUser();
-    const [userId, setUserId] = useState()
 
     const router = useRouter();
 
     const data = props.data
     const id = data._id
-    
-    useEffect(() => {
-      if (user?.mongoData)
-      setUserId(user.mongoData._id)
-    }, [user])
 
     const voteHandler = (index) => {
       return (async () => {
@@ -23,7 +17,7 @@ export default function VoteDisplay(props) {
           body: JSON.stringify({
             "_id" : id,
             "index" : index,
-            "userId" : userId,
+            "user" : user.mongoData,
             "question" : data.question
           }),
           headers: {
