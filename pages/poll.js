@@ -96,7 +96,7 @@ export default function Poll(props) {
                 router.push(`/vote?id=${pollID}`)
             }
         }
-    }, [pollID, user])
+    }, [props, user, router])
     
     return (
         <div>

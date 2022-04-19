@@ -85,7 +85,7 @@ export default function Vote(props) {
                 }
             })
         }
-    }, [pollID, user, auth])
+    }, [props, user, router])
     
     return (
         <div>

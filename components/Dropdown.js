@@ -38,8 +38,8 @@ export default function Dropdown( props ) {
             {
                 props.options.map((option, index) => {
                     return (
-                    <div>
-                        <DropdownElement key={index} option={option} onClick={() => {
+                    <div key={index}>
+                        <DropdownElement option={option} onClick={() => {
                             setState(option)
                             handleClick()
                             submitForm(option);
