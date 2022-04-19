@@ -2,6 +2,7 @@ import withAuth from '../util/auth/withAuth';
 import { useUser } from '../util/auth/useUser';
 import { useEffect } from 'react';
 import { auth } from '../util/firebase';
+import { useRouter } from "next/router";
 
 export async function getServerSideProps(context) {
   const redirectLink = context.resolvedUrl
