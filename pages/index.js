@@ -4,6 +4,8 @@ import { useUser } from '../util/auth/useUser';
 import Link from 'next/link';
 import { useEffect } from 'react';
 import { auth } from '../util/firebase';
+import { useRouter } from "next/router";
+
 
 // Getting initial database read
 export async function getServerSideProps(context) {
@@ -23,6 +25,8 @@ export async function getServerSideProps(context) {
 
 export default function Home(props) {  
   const { user, logout} = useUser();
+  const router = useRouter();
+
 
   useEffect( ()=> {
     auth.onAuthStateChanged((authUser) => {

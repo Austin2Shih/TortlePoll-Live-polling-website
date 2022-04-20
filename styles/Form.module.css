@@ -1,0 +1,70 @@
+.main{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    position: absolute;
+    width: 26rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--subBox);
+    border-radius: 1.5rem;
+    border-color: var(--darkBrown);
+    border-style: solid;
+}
+
+.flexColumn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+}
+
+.input{
+    margin-left: 0.6rem;
+    margin-bottom: 0.12rem;
+    border: none;
+    background: none;
+    outline: none;
+}
+
+.inputBox{
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 13rem;
+    background-color: var(--main);
+    border-radius: 25px;
+    border-style: solid;
+    border-color: var(--darkBrown);
+    border-width: 2px;
+}
+
+.button {
+    width: 6rem;
+    height: 2rem;
+    margin-top: 0.4rem;
+    margin-bottom: 1rem;
+    background-color: var(--brown);
+    border-radius: 1rem;
+    border-style: solid;
+    border-color: var(--darkBrown);
+    cursor: pointer;
+
+}
+
+.button:hover {
+    background-color: var(--main);
+}
+
+.button:active {
+    transform: scale(1.04);
+}

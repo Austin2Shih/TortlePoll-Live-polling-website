@@ -33,6 +33,8 @@ const ethnicities = [
 
 export default function UserInfo(props) {
   const {user, login} = useUser();
+  const router = useRouter();
+
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
       if (!authUser) {
