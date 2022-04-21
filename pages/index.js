@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useEffect } from 'react';
 import { auth } from '../util/firebase';
 import { useRouter } from "next/router";
+import Navbar from '../components/Navbar';
 
 
 // Getting initial database read
@@ -38,6 +39,7 @@ export default function Home(props) {
 
   return (
     <div>
+      <Navbar></Navbar>
       <div>
         <PollForm></PollForm>
       </div>
@@ -45,8 +47,6 @@ export default function Home(props) {
         user?.mongoData &&
         <div>Public {JSON.stringify(user.mongoData)}</div>
       }
-      
-      <div><Link href="/dashboard">Go to Dashboard</Link></div>
     </div>
   )
 }

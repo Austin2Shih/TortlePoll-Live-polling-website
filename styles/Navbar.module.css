@@ -1,0 +1,22 @@
+.container{
+    height: 3.2rem;
+    background-color: var(--darkBrown);
+    display: flex;
+    
+    justify-content: space-between;
+
+}
+
+.list {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    text-align: left;
+    width: 100vw;
+}
+
+.listItem {
+    color: var(--main);
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+}

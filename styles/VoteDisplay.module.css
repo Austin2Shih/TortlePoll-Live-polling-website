@@ -1,0 +1,36 @@
+.main {
+    margin-top: 3vw;
+    height: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.button {
+  width: 80vw;
+  height: auto;
+  margin-top: 0.4rem;
+  margin-bottom: 1rem;
+  background-color: var(--brown);
+  border-style: solid;
+  border-color: var(--darkBrown);
+  cursor: pointer;
+  font-size: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.button:hover {
+  background-color: var(--main);
+}
+
+.button:active {
+  transform: scale(1.04);
+}

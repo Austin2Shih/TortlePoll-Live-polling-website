@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { createUserWithEmailAndPassword } from "firebase/auth"
 import { auth } from '../util/firebase';
+import styles from '../styles/Form.module.css'
+
 
 export async function getServerSideProps(context) {
   const {query} = context
@@ -66,33 +68,45 @@ export default function SignUp() {
     };
 
   return (
-    <div>
-      <h1>Sign up!</h1>
-      {error}
-      <form onSubmit={handleSignUp}>
-          <label>Email</label>
-          <input 
-            onChange={(e) => setEmail(e.target.value)} 
-            value={email}
-            type="email" 
-            placeholder="Email">
-          </input>
-          <label>Password</label>
-          <input 
-            onChange={(e) => setPasswordOne(e.target.value)} 
-            value={passwordOne}
-            type="password" 
-            placeholder="Password">
-          </input>
-          <label>Confirm Password</label>
-          <input 
-            onChange={(e) => setPasswordTwo(e.target.value)} 
-            value={passwordTwo}
-            type="password" 
-            placeholder="Password">
-          </input>
-          <input type="submit"></input>
-        </form>
+    <div className={styles.main}>
+      <div className={styles.container}>
+        <h1>Sign up!</h1>
+        {error}
+        <form onSubmit={handleSignUp} className={styles.flexColumn}>
+            <label>Email</label>
+            <div className={styles.inputBox}>
+              <input 
+                className={styles.input}
+                onChange={(e) => setEmail(e.target.value)} 
+                value={email}
+                type="email" 
+                placeholder="Email">
+              </input>
+            </div>
+            <label>Password</label>
+            <div className={styles.inputBox}>
+              <input 
+                className={styles.input}
+                onChange={(e) => setPasswordOne(e.target.value)} 
+                value={passwordOne}
+                type="password" 
+                placeholder="Password">
+              </input>
+            </div>
+            <label>Confirm Password</label>
+            <div className={styles.inputBox}>
+              <input 
+                className={styles.input}
+                onChange={(e) => setPasswordTwo(e.target.value)} 
+                value={passwordTwo}
+                type="password" 
+                placeholder="Password">
+              </input>
+            </div>
+            <button className={styles.button}>Sign Up</button>
+          </form>
+      </div>
+
     </div>
 
   )

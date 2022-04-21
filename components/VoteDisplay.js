@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'; 
 import { useRouter } from "next/router";
 import { useUser } from '../util/auth/useUser';
+import styles from '../styles/VoteDisplay.module.css'
 
 export default function VoteDisplay(props) {
     const {user, logout} = useUser();
@@ -33,18 +34,21 @@ export default function VoteDisplay(props) {
       })
     }
         return (
-          <div>
-              <h1>{data.question}</h1>
-              {
-                data.options.map((option, index) => {
-                  return (
-                    user?.email &&
-                    <div key={index}>
-                      <button onClick={voteHandler(index)}>{option.option}</button>
-                    </div>
-                  )
-                })
-              }
+          <div className={styles.main}>
+              <div className={styles.flexColumn}>
+                <h1>{data.question}</h1>
+                {
+                  data.options.map((option, index) => {
+                    return (
+                      user?.email &&
+                      <div key={index}>
+                        <button className={styles.button} onClick={voteHandler(index)}>{option.option}</button>
+                      </div>
+                    )
+                  })
+                }
+              </div>
+
           </div>
       )
   }

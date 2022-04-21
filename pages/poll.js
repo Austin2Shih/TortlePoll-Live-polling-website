@@ -48,9 +48,8 @@ export default function Poll(props) {
     const {user, logout} = useUser();
     const router = useRouter();
 
-    const [pollData, setPollData] = useState(
-        <PollDisplay data={props.data}></PollDisplay>
-    )
+    const [data, setData] = useState(props.data)
+
     const [chart, setChart] = useState(
         <DataChart data={props.data}></DataChart>
     )
@@ -75,7 +74,7 @@ export default function Poll(props) {
                     }
                 }).then(async (response) => {
                     await response.json().then((res) => {
-                        setPollData(<PollDisplay data={res}></PollDisplay>)
+                        setData(res)
                         setChart(<DataChart data={res}></DataChart>)
                     })
                 })
@@ -100,7 +99,7 @@ export default function Poll(props) {
     
     return (
         <div>
-            {pollData}
+            {data.question}
             {chart}
         </div>
     )

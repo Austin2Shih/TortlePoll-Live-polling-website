@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import {auth} from '../util/firebase';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import Link from 'next/link';
+import styles from '../styles/Form.module.css'
+
 
 export async function getServerSideProps(context) {
   const {query} = context
@@ -39,19 +41,25 @@ export default function FirebaseAuth() {
   }
 
   return (
-    <div>
+    <div className={styles.main}>
+      <div className={styles.container}>
+        <h1>Reset Password</h1>
         {error}
         {message}
-        <form onSubmit={handleReset}>
+        <form onSubmit={handleReset} className={styles.flexColumn}>
           <label>Email</label>
-          <input 
-            onChange={(e) => setEmail(e.target.value)} 
-            value={email}
-            type="email" 
-            placeholder="Email">
-          </input>
-          <input type="submit"></input>
+          <div className={styles.inputBox}>
+            <input 
+              className={styles.input}
+              onChange={(e) => setEmail(e.target.value)} 
+              value={email}
+              type="email" 
+              placeholder="Email">
+            </input>
+          </div>
+          <button className={styles.button}>Reset Password</button>
         </form>
+      </div>
     </div>
   );
 }

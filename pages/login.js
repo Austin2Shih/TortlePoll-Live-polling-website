@@ -42,6 +42,7 @@ export default function FirebaseAuth(props) {
   return (
     <div className={styles.main}>
       <div className={styles.container}>
+          <h1>Log in</h1>
           {error}
           <form className={styles.flexColumn} onSubmit={handleLogin}>
             <label>Email</label>

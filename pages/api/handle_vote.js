@@ -12,7 +12,7 @@ let pusher = new Pusher({
 
 export default async function handler(req, res) {
   const client = await clientPromise
-  const db = client.db(process.env.MONGODB_POLLS)
+  const db = client.db("polls")
   const dbUsers = client.db("users")
 
   const data = req.body
@@ -26,7 +26,6 @@ export default async function handler(req, res) {
     question: pollQuestion
   })
 
-
   const response = await db.collection("polls").updateOne(
     {
       "_id": ObjectID(pollID),
@@ -39,8 +38,8 @@ export default async function handler(req, res) {
     {
       upsert: true
     }
-  ).then(async () => {
-    const res = await pusher.trigger('polling-development', `new-vote-${pollID}`, {}).then((r) => {
+    ).then(async () => {
+      const res = await pusher.trigger('polling-development', `new-vote-${pollID}`, {}).then((r) => {
     }).catch((error) => {
       console.log(error)
     })
