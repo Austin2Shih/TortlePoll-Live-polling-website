@@ -13,9 +13,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: var(--subBox);
-    border-radius: 1.5rem;
-    border-color: var(--darkBrown);
+    background-color: var(--main);
+    border-radius: 8px;
+    border-color: black;
     border-style: solid;
 }
 

@@ -1,22 +1,35 @@
 .container{
     height: 3.2rem;
-    background-color: var(--darkBrown);
+    background-color: var(--main);
     display: flex;
-    
-    justify-content: space-between;
-
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .list {
+    margin-top: 0rem;
+    min-height: 100%;
     display: flex;
     flex-direction: row;
     list-style: none;
-    text-align: left;
+    align-items: center;
     width: 100vw;
+    gap: 1.5rem;
 }
 
 .listItem {
-    color: var(--main);
+    color: black;
     text-decoration: none;
     transition: all 0.2s ease-in-out;
+}
+
+.button {
+    background-color: var(--green);
+    border: none;
+    height: 2rem;
+    width: 5rem;
+    border-radius: 8px;
+}
+
+.buttonText {
+    background-color: white;
 }

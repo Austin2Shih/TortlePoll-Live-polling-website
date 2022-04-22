@@ -1,10 +1,13 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap');
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  font-family: Montserrat, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  background-color: var(--main);
+  background-color: var(--background);
 }
 
 a {
@@ -17,13 +20,25 @@ a {
 }
 
 :root {
-  --main: #e0f2cb;
-  --subBox: #afcc9b;
-  --brown: #c2a891;
-  --darkBrown: #6b5f55;
+  --background: #eeeeee;
+  --main: white;
+  --green: #2BAE28;
+  --blue: #23B5D6;
+  --red: #d95d4a;
 }
 
 ::placeholder {
   color: black;
-  opacity: 0.6;
+  opacity: 0.5;
+  font-weight: 300;
+  font-size: 1.2rem;
+}
+
+input[type="text"]
+{
+  color: black;
+  font-family: Montserrat, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen;
+  font-weight: 200;
+  font-size: 1.2rem;
+  font-size:1.1rem;
 }
