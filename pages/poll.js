@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'; 
 import { ObjectID } from 'bson';
 import clientPromise from '../util/mongodb'
-import PollDisplay from '../components/PollDisplay';
 import Pusher from 'pusher-js'
 import { useUser } from '../util/auth/useUser';
 import { useRouter } from "next/router";
 import DataChart from '../components/DataChart'
 import { auth } from '../util/firebase';
+import styles from '../styles/Pollpage.module.css'
 
 
 // Initializing Pusher
@@ -98,7 +98,7 @@ export default function Poll(props) {
     }, [props, user, router])
     
     return (
-        <div>
+        <div className={styles.main}>
             {data.question}
             {chart}
         </div>
