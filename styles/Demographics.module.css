@@ -1,0 +1,30 @@
+.main {
+    margin-top: 3vh;
+    min-height: 88vh;
+    margin-left: 4vw;
+    width: 92vw;
+    border-radius: 6px;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.flexColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.title {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 3.3rem;
+    align-self: center;
+    max-width: 28rem;
+    text-align: center;
+    font-weight: 400;
+    font-size: 1.1rem;
+}

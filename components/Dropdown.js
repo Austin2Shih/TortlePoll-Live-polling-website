@@ -1,22 +1,37 @@
-import { useState } from 'react';
-import DropdownElement from '../components/DropdownElement.js';
+import { useState, useRef, useEffect } from 'react';
 import styles from '../styles/Dropdown.module.css'
-
+import {FiChevronDown, FiChevronUp} from 'react-icons/fi'
 
 export default function Dropdown( props ) {
-    const [display, setDisplay] = useState('none')
-    const [state, setState] = useState("--")
+    const [display, setDisplay] = useState(false)
+    const [state, setState] = useState(props.initialSelection)
+
+    function useOutsideAlerter(ref) {
+        useEffect(() => {
+          function handleClickOutside(event) {
+            if (ref.current && !ref.current.contains(event.target)) {
+                setDisplay(false)
+            }
+          }
+          // Bind the event listener
+          document.addEventListener("mousedown", handleClickOutside);
+          return () => {
+            // Unbind the event listener on clean up
+            document.removeEventListener("mousedown", handleClickOutside);
+          };
+        }, [ref]);
+      }
+
+    const wrapperRef = useRef(null);
+    useOutsideAlerter(wrapperRef);
+
 
     function handleClick() {
-        if(display == 'none') {
-            setDisplay('block')
-        } else {
-            setDisplay('none')
-        }
+        setDisplay(!display)
     }
 
     function submitForm(option) {
-        fetch(`/api/update_ethnicity`, {
+        fetch(`/api/${props.apiCall}`, {
             method: 'POST',
             body: JSON.stringify({
                 "user" : props.user,
@@ -29,34 +44,35 @@ export default function Dropdown( props ) {
     }
 
     return (
-
-        <div>
+        <div ref={wrapperRef} className={styles.main}>
+            <p className={styles.label}>{props.title}</p>
             <div onClick={handleClick} className={styles.DropdownButton}>
-                { state }
+                { state }  
+                <div className={styles.arrow}>
+                    {(display)? (<FiChevronUp></FiChevronUp>) : (<FiChevronDown></FiChevronDown>)}
+                </div>              
             </div>
-            <div style={{display: display}}>
             {
-                props.options.map((option, index) => {
-                    return (
-                    <div key={index}>
-                        <DropdownElement option={option} onClick={() => {
-                            setState(option)
-                            handleClick()
-                            submitForm(option);
-                            }
-                        }>
-                        <p>
-                            {option}
-                        </p>
-                        </DropdownElement>
+                display &&
+                <div>
+                    <div className={styles.elementsContainer}>
+                        {
+                            props.options.map((option, index) => {
+                                return (
+                                <div className={styles.containerElement} key={index}
+                                    option={option} onClick={() => {
+                                        setState(option)
+                                        handleClick()
+                                        submitForm(option);
+                                        }}>
+                                    <p className={styles.text}>{option}</p>
+                                </div>
+                                )
+                            })
+                        }
                     </div>
-                    )
-                })
+                </div>
             }
-            </div>
-            
         </div>
-
     )
-
 }

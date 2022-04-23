@@ -3,6 +3,7 @@ import { useUser } from '../util/auth/useUser';
 import { useEffect } from 'react';
 import { auth } from '../util/firebase';
 import { useRouter } from "next/router";
+import Navbar from '../components/Navbar';
 
 export async function getServerSideProps(context) {
   const redirectLink = context.resolvedUrl
@@ -29,6 +30,7 @@ export default function Dashboard(props){
 
   return (
     <div >
+      <Navbar></Navbar>
       <div>Private</div>
       {
         user?.email &&

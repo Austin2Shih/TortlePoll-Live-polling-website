@@ -68,7 +68,7 @@ export default function ResetPassword(props) {
         </form>
         <div className={styles.wrongPlace}>
             <p>Remember password?</p>
-            <Link classname={styles.link} href={`/signup?redirect=${props.url}`}>
+            <Link classname={styles.link} href={`/login?redirect=${props.url}`}>
               <a className={styles.link}>Log in</a>
             </Link>
         </div>

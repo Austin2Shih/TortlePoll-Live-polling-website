@@ -30,7 +30,6 @@ export default function FirebaseAuth(props) {
 
   function handleLogin(e) {
     e.preventDefault();
-    console.log(auth, email, password)
     signInWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
         console.log("logged in!")

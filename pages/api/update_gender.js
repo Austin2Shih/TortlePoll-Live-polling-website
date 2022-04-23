@@ -13,7 +13,7 @@ export default async function handler(req, res) {
       "_id": ObjectID(id),
     },
     {
-      $set: { "info.ethnicity" : state },
+      $set: { "info.gender" : state },
     },
     {
       upsert: true
@@ -33,7 +33,7 @@ export default async function handler(req, res) {
            "_id": ObjectID(poll.id),
         },
         {
-          $set: { "options.$[].voters.$[user].info.ethnicity" : state },
+          $set: { "options.$[].voters.$[user].info.gender" : state },
         },
           { arrayFilters: [  { "user._id": { $eq: id } } ] },
         {
