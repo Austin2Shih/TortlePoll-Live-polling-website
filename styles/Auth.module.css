@@ -1,0 +1,111 @@
+.main{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    position: absolute;
+    width: 23rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--main);
+    border-radius: 6px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding-left: 2.3rem;
+    padding-right: 2.3rem;
+    justify-content: center;
+}
+
+.flexColumn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.input{
+    margin-left: 0.6rem;
+    height: 2.2rem;
+    border: none;
+    background: none;
+    outline: none;
+    width: calc(100% - 1rem);
+}
+
+.inputBox{
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    background-color: var(--main);
+    border-radius: 6px;
+    border-style: solid;
+    border-color: var(--darkBrown);
+    border-width: 1px;
+    margin-bottom: 8px;
+}
+
+.button {
+    width: 100%;
+    height: 3rem;
+    margin-top: 0.4rem;
+    margin-bottom: 1rem;
+    background-color: var(--blue);
+    border-radius: 6px;
+    border-style: solid;
+    border-color: var(--darkBrown);
+    cursor: pointer;
+    font-size: 1.4rem;
+    color: white;
+
+}
+
+.button:hover {
+    transform: scale(1.02);
+}
+
+.logoContainer {
+    width: 16%;
+    margin-top: 2.5rem;
+    margin-left: 42%;
+    margin-bottom: -0.2rem;
+}
+
+.titleContainer {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    padding-bottom: 1rem;
+}
+
+.title {
+    line-height: 0;
+    font-weight: 400;
+}
+
+.label {
+    padding-top: 10px;
+    padding-bottom: 4px;
+}
+
+.link {
+    text-align: right;
+    padding-top: 4px;
+    padding-bottom: 6px;
+    color: blue;
+    text-decoration: underline;
+    font-size: 0.9rem;
+}
+
+.wrongPlace {
+    justify-content: center;
+    justify-self: center;
+    display: flex;
+    flex-direction: row;
+    font-size: 0.9rem;
+    align-items: baseline;
+    gap: 0.6rem;
+    padding-bottom: 2rem;
+}

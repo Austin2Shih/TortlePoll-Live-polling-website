@@ -36,7 +36,7 @@ export default function VoteDisplay(props) {
         return (
           <div className={styles.main}>
               <div className={styles.flexColumn}>
-                <h1>{data.question}</h1>
+                <h1 className={styles.title}>{data.question}</h1>
                 {
                   data.options.map((option, index) => {
                     return (

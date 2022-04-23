@@ -3,7 +3,9 @@ import { useRouter } from "next/router";
 import {auth} from '../util/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import Link from 'next/link';
-import styles from '../styles/Form.module.css'
+import styles from '../styles/Auth.module.css'
+import Image from 'next/image'
+import logo from '../public/cowboy_turtle.png'
 
 
 export async function getServerSideProps(context) {
@@ -42,10 +44,16 @@ export default function FirebaseAuth(props) {
   return (
     <div className={styles.main}>
       <div className={styles.container}>
-          <h1>Log in</h1>
+          <div className={styles.titleContainer}>
+            <div className={styles.logoContainer}>
+              <Image src={logo}></Image>
+            </div>
+            <h1 className={styles.title}>Log in</h1>
+          </div>
+
           {error}
           <form className={styles.flexColumn} onSubmit={handleLogin}>
-            <label>Email</label>
+            <label className={styles.label}>Email</label>
             <div className={styles.inputBox}>
               <input
                 className={styles.input} 
@@ -55,7 +63,7 @@ export default function FirebaseAuth(props) {
                 placeholder="Email">
               </input>
             </div>
-            <label>Password</label>
+            <label className={styles.label}>Password</label>
             <div className={styles.inputBox}>
               <input 
                 className={styles.input} 
@@ -65,18 +73,18 @@ export default function FirebaseAuth(props) {
                 placeholder="Password">
               </input>
             </div>
+            <Link href={`/resetPassword?redirect=${props.url}`}>
+              <a className={styles.link}>Forgot password?</a>
+            </Link>
             <button className={styles.button}>Log in</button>
           </form>
-          <p>
-            <Link href={`/signup?redirect=${props.url}`}>
-              Sign Up
+          <div className={styles.wrongPlace}>
+            <p>New to Tortlepoll?</p>
+            <Link classname={styles.link} href={`/signup?redirect=${props.url}`}>
+              <a className={styles.link}>Sign up</a>
             </Link>
-          </p>
-          <p>
-            <Link href={`/resetPassword?redirect=${props.url}`}>
-              <a>Reset Password</a>
-            </Link>
-          </p>
+          </div>
+
       </div>
     </div>
 

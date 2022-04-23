@@ -2,7 +2,10 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { createUserWithEmailAndPassword } from "firebase/auth"
 import { auth } from '../util/firebase';
-import styles from '../styles/Form.module.css'
+import styles from '../styles/Auth.module.css'
+import Image from 'next/image'
+import logo from '../public/cowboy_turtle.png'
+import Link from 'next/link';
 
 
 export async function getServerSideProps(context) {
@@ -19,7 +22,7 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default function SignUp() {
+export default function SignUp(props) {
     const [email, setEmail] = useState("");
     const [passwordOne, setPasswordOne] = useState("");
     const [passwordTwo, setPasswordTwo] = useState("");
@@ -70,10 +73,15 @@ export default function SignUp() {
   return (
     <div className={styles.main}>
       <div className={styles.container}>
-        <h1>Sign up!</h1>
+          <div className={styles.titleContainer}>
+            <div className={styles.logoContainer}>
+              <Image src={logo}></Image>
+            </div>
+            <h1 className={styles.title}>Sign up</h1>
+          </div>
         {error}
         <form onSubmit={handleSignUp} className={styles.flexColumn}>
-            <label>Email</label>
+            <label className={styles.label}>Email</label>
             <div className={styles.inputBox}>
               <input 
                 className={styles.input}
@@ -83,7 +91,7 @@ export default function SignUp() {
                 placeholder="Email">
               </input>
             </div>
-            <label>Password</label>
+            <label className={styles.label}>Password</label>
             <div className={styles.inputBox}>
               <input 
                 className={styles.input}
@@ -93,7 +101,7 @@ export default function SignUp() {
                 placeholder="Password">
               </input>
             </div>
-            <label>Confirm Password</label>
+            <label className={styles.label}>Confirm Password</label>
             <div className={styles.inputBox}>
               <input 
                 className={styles.input}
@@ -105,6 +113,12 @@ export default function SignUp() {
             </div>
             <button className={styles.button}>Sign Up</button>
           </form>
+          <div className={styles.wrongPlace}>
+            <p>Already have an account?</p>
+            <Link classname={styles.link} href={`/login?redirect=${props.url}`}>
+              <a className={styles.link}>Login</a>
+            </Link>
+          </div>
       </div>
 
     </div>

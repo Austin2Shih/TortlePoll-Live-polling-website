@@ -6,6 +6,7 @@ import Pusher from 'pusher-js'
 import { useUser } from '../util/auth/useUser';
 import { useRouter } from "next/router";
 import { auth } from '../util/firebase';
+import Navbar from '../components/Navbar'
 
 // Initializing Pusher
 var pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY, {
@@ -89,6 +90,7 @@ export default function Vote(props) {
     
     return (
         <div>
+            <Navbar></Navbar>
             {pollData}
         </div>
     )
