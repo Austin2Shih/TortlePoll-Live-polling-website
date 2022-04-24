@@ -60,6 +60,7 @@ export default function PollDisplay(props) {
     }
 
     const options = {
+      maintainAspectRatio: false,
       indexAxis: 'y',
       scales: {
         y: {
