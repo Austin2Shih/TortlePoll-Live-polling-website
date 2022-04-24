@@ -10,7 +10,7 @@ export const getUserFromCookie = () => {
 
 export const setUserCookie = user => {
   cookies.set('auth', user, {
-    expires: 1 / 24
+    expires: 1 / 24,
   });
 };
 

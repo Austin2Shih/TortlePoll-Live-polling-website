@@ -7,6 +7,8 @@ import { useRouter } from "next/router";
 import DataChart from '../components/DataChart'
 import { auth } from '../util/firebase';
 import styles from '../styles/Pollpage.module.css'
+import Navbar from '../components/Navbar';
+import { countVotes } from '../util/pollHandling';
 
 
 // Initializing Pusher
@@ -49,6 +51,8 @@ export default function Poll(props) {
     const router = useRouter();
 
     const [data, setData] = useState(props.data)
+    const [numVotes, setNumVotes] = useState(countVotes(props.data.options))
+
 
     const [chart, setChart] = useState(
         <DataChart data={props.data}></DataChart>
@@ -75,6 +79,7 @@ export default function Poll(props) {
                 }).then(async (response) => {
                     await response.json().then((res) => {
                         setData(res)
+                        setNumVotes(countVotes(res.options))
                         setChart(<DataChart data={res}></DataChart>)
                     })
                 })
@@ -98,9 +103,16 @@ export default function Poll(props) {
     }, [props, user, router])
     
     return (
-        <div className={styles.main}>
-            {data.question}
-            {chart}
+        <div>
+            <Navbar></Navbar>
+            <div className={styles.main}>
+                <h2 className={styles.title}>{data.question}</h2>
+                <p className={styles.voteCount}>{`Total votes - ${numVotes}`}</p>
+                <div>
+                    {chart}
+                </div>
+            </div>
         </div>
+
     )
 }

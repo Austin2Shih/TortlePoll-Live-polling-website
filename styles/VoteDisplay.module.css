@@ -1,6 +1,8 @@
 .main {
     width: 92vw;
-    margin-left: 4vw;
+    max-width: 66rem;
+    margin-left: auto;
+    margin-right: auto;
     margin-top: 3vh;
     height: auto;
     display: flex;
@@ -20,7 +22,7 @@
 }
 
 .button {
-  width: 80vw;
+  width: 65vw;
   height: auto;
   margin-top: 0.4rem;
   margin-bottom: 1rem;

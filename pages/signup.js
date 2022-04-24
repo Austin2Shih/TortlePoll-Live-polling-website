@@ -49,17 +49,16 @@ export default function SignUp(props) {
       })
     }
 
-    function handleSignUp(e) {
+    async function handleSignUp(e) {
       e.preventDefault();
       if(passwordOne === passwordTwo)
-        createUserWithEmailAndPassword(auth, email, passwordOne)
+        await createUserWithEmailAndPassword(auth, email, passwordOne)
         .then(async (userCredential) => {
           await create_user(userCredential).then(() => {
             console.log("Success. The user is created in Firebase")
             setTimeout(() => {  
-              router.push(`/settings?redirect=${props.url}`); 
+              router.push(`/demographics?redirect=${props.url}`); 
             }, 3000);
-            router.push(`/user_info?redirect=${props.url}`);
           }) 
         })
         .catch(error => {

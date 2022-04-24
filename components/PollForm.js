@@ -57,8 +57,6 @@ export default function PollForm() {
         "userId" : user.mongoData._id,
         "question" : target.question.value,
         "private" : isPrivate,
-        "votes" : [],
-
       }
       let options = []
       for (let i = 1; i < target.length-4; i++) {

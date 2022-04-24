@@ -5,6 +5,7 @@ import Dropdown from '../components/Dropdown.js'
 import { useUser } from '../util/auth/useUser';
 import Navbar from '../components/Navbar'
 import styles from '../styles/Demographics.module.css'
+import Link from 'next/link'
 
 export async function getServerSideProps(context) {
   const currLink = context.resolvedUrl
@@ -12,7 +13,7 @@ export async function getServerSideProps(context) {
   const {query} = context
   let redirectLink = query.redirect
   if (!redirectLink) {
-      redirectLink = '/'
+      redirectLink = '/dashboard'
   }
 
   return {
@@ -55,36 +56,41 @@ export default function Demographics(props) {
   }, [])
 
   return (
-    <div>
+    <div className={styles.bigContainer}>
       <Navbar></Navbar>
-
-      <div className={styles.main}>
-          <div className={styles.title}>
-            <p>{"Please fill out some demographic info to help provide poll creaters with additional information"}</p>
-            <p>{"All fields are optional"}</p>
-          </div>
-          {
-            user?.mongoData &&
-            <div className={styles.flexColumn}>
-              <Dropdown 
-                user={user}
-                title={'What ethnicity do you identify with?'}
-                options={ethnicities} 
-                initialSelection={(user.mongoData.info.ethnicity)? user.mongoData.info.ethnicity : "Select ethnicity"}
-                apiCall={'update_ethnicity'}>
-              </Dropdown>
-              <Dropdown 
-                user={user}
-                title={'What gender do you identify with?'}
-                options={genders} 
-                initialSelection={(user.mongoData.info.gender)? user.mongoData.info.gender : "Select gender"}
-                apiCall={'update_gender'}>
-              </Dropdown>
+        <div className={styles.main}>
+            <div className={styles.title}>
+              <p>{"Please fill out some demographic info to help provide poll creaters with additional information"}</p>
+              <p>{"All fields are optional"}</p>
             </div>
-          }
-      </div>
-    </div>
+            {
+              user?.mongoData &&
+              <div className={styles.flexColumn}>
+                <Dropdown 
+                  user={user}
+                  title={'What ethnicity do you identify with?'}
+                  options={ethnicities} 
+                  initialSelection={(user.mongoData.info.ethnicity)? user.mongoData.info.ethnicity : "Select ethnicity"}
+                  apiCall={'update_ethnicity'}>
+                </Dropdown>
+                <Dropdown 
+                  user={user}
+                  title={'What gender do you identify as?'}
+                  options={genders} 
+                  initialSelection={(user.mongoData.info.gender)? user.mongoData.info.gender : "Select gender"}
+                  apiCall={'update_gender'}>
+                </Dropdown>
 
+              </div>
+            }
+            <div className={styles.buttonContainer}>
+              <button className={styles.button}>
+                <Link href={props.url}>
+                  <a className={styles.buttonText}>Continue</a></Link>
+              </button>
+            </div>
+        </div>
+    </div>
   );
 }
 

@@ -1,14 +1,16 @@
 .main {
     margin-top: 3vh;
     min-height: 88vh;
-    margin-left: 4vw;
     width: 92vw;
+    max-width: 66rem;
     border-radius: 6px;
     background-color: white;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     position: relative;
     display: flex;
     flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .flexColumn {
@@ -27,4 +29,34 @@
     text-align: center;
     font-weight: 400;
     font-size: 1.1rem;
+}
+
+.button {
+    width: 9rem;
+    height: 3rem;
+    border-radius: 6px;
+    border-style: none;
+    cursor: pointer;
+    background-color: var(--blue);
+    justify-self: right;
+}
+
+.button:hover {
+    transform: scale(1.02);
+}
+
+.buttonText {
+    font-size: 1.2rem;
+    font-weight: 300;
+    line-height: 1.48rem;
+    color: white;
+    margin: auto;
+    font-family: Montserrat, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen;
+    font-weight: 400;
+}
+
+.buttonContainer {
+    right: 8rem;
+    bottom: 6rem;
+    position: absolute;
 }

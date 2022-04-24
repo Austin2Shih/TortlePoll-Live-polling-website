@@ -49,7 +49,7 @@ export default function Navbar() {
                     <Link href="/create_poll">Create poll</Link>
                 </li>
                 <li className={styles.listItem}>
-                    <Link href="/dashboard">Broswe polls</Link>
+                    <Link href="/browse_polls">Broswe polls</Link>
                 </li>
             </ul>
             <ul className={styles.rightList}>
