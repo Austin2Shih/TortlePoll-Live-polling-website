@@ -8,6 +8,9 @@ import { useRouter } from "next/router";
 import Navbar from '../components/Navbar';
 
 
+// Variable to check if bound to authCheck
+var authBound = false
+
 // Getting initial database read
 export async function getServerSideProps(context) {
   const redirectLink = context.resolvedUrl
@@ -30,12 +33,15 @@ export default function CreatePoll(props) {
 
 
   useEffect( ()=> {
-    auth.onAuthStateChanged((authUser) => {
-      if (!authUser) {
-          router.push(`/login?redirect=${props.url}`);
-      }
-    })
-  })
+    if (!authBound) {
+      auth.onAuthStateChanged((authUser) => {
+          if (!authUser) {
+              router.push(`/login?redirect=${props.url}`);
+          }
+      })
+      authBound = true
+    }
+  }, [])
 
   return (
     <div>

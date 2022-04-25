@@ -3,6 +3,9 @@ import { useRouter } from "next/router";
 import { useUser } from '../util/auth/useUser';
 import styles from '../styles/VoteDisplay.module.css'
 
+// Variable to check if user voted
+var voted = false
+
 export default function VoteDisplay(props) {
     const {user, logout} = useUser();
 
@@ -13,24 +16,27 @@ export default function VoteDisplay(props) {
 
     const voteHandler = (index) => {
       return (async () => {
-        await fetch(`/api/handle_vote`, {
-          method: 'POST',
-          body: JSON.stringify({
-            "_id" : id,
-            "index" : index,
-            "user" : user.mongoData,
-            "question" : data.question
-          }),
-          headers: {
-            "Content-type": "application/json; charset=UTF-8"
-          }
-        })
-        .then(() => {
-          router.push(`/poll?id=${id}`)
-        })
-        .catch(error => {
-          console.log(error)
-        })
+        if (!voted) {
+          voted = true
+          await fetch(`/api/handle_vote`, {
+            method: 'POST',
+            body: JSON.stringify({
+              "_id" : id,
+              "index" : index,
+              "user" : user.mongoData,
+              "question" : data.question
+            }),
+            headers: {
+              "Content-type": "application/json; charset=UTF-8"
+            }
+          })
+          .then(() => {
+            router.push(`/poll?id=${id}`)
+          })
+          .catch(error => {
+            console.log(error)
+          })
+        }
       })
     }
         return (

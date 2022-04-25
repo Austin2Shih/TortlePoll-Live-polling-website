@@ -1,16 +1,22 @@
-import withAuth from '../util/auth/withAuth';
 import { useUser } from '../util/auth/useUser';
 import { useEffect } from 'react';
 import { auth } from '../util/firebase';
 import { useRouter } from "next/router";
 import Navbar from '../components/Navbar';
+import styles from '../styles/Dashboard.module.css'
+import PollList from '../components/PollList'
+
+
+
+// Variable to check if bound to authCheck
+var authBound = false
 
 export async function getServerSideProps(context) {
   const redirectLink = context.resolvedUrl
 
   return {
       props: {
-          "url" : redirectLink
+          "url" : redirectLink,
       }
   }
 }
@@ -21,25 +27,23 @@ export default function Dashboard(props){
 
 
   useEffect( ()=> {
-    auth.onAuthStateChanged((authUser) => {
-      if (!authUser) {
-          router.push(`/login?redirect=${props.url}`);
-      }
-    })
+    if (!authBound) {
+      auth.onAuthStateChanged((authUser) => {
+        if (!authUser) {
+            router.push(`/login?redirect=${props.url}`);
+        }
+      })
+      authBound = true
+    }
+
   })
 
   return (
     <div >
       <Navbar></Navbar>
-      <div>Private</div>
-      {
-        user?.email &&
-        <div>
-          <div>Email: {user.email}</div>
-          <button onClick={logout('/login')}>Logout</button>
-        </div> 
-      }
-      
+      <div className={styles.main}>
+        <PollList></PollList>
+      </div>
     </div>
   )
 }

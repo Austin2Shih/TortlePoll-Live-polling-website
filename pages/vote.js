@@ -17,6 +17,9 @@ var pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY, {
 // Variable to check if binded to Pusher
 var bound = false
 
+// Variable to check if bound to authCheck
+var authBound = false
+
 // Subscribing to messenger channel
 const channel = pusher.subscribe('polling-development')
 
@@ -52,11 +55,15 @@ export default function Vote(props) {
     const pollID = props.data._id
 
     useEffect(() => {
-        auth.onAuthStateChanged((authUser) => {
-            if (!authUser) {
-                router.push(`/login?redirect=${props.url}`);
-            }
-        })
+        if (!authBound) {
+            auth.onAuthStateChanged((authUser) => {
+                if (!authUser) {
+                    router.push(`/login?redirect=${props.url}`);
+                }
+            })
+            authBound = true
+        }
+
 
         if (!bound) {
             channel.bind(`new-vote-${pollID}`, async () => {

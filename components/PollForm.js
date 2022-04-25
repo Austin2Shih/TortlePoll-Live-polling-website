@@ -25,7 +25,7 @@ function makeOptionsList(count) {
   
 }
 
-var listSize = 2;
+let listSize = 2;
 
 export default function PollForm() {
   const { user } = useUser()

@@ -8,6 +8,9 @@ import {
   getUserFromCookie
 } from './userCookie';
 
+// Variable to keep track of if authlistener happened
+var authListening = false
+
 export const mapUserData = async user => {
   const { uid, email } = user;
   const token = await user.getIdToken(true);
@@ -23,12 +26,12 @@ export const mapUserData = async user => {
     const res = await response.json()
     return res
   })
-  return {
+  return JSON.stringify({
     id: uid,
     email,
     token,
     mongoData: response
-  };
+  });
 };
 
   
@@ -50,17 +53,20 @@ const useUser = () => {
   }
 
   useEffect(() => {
-        const cancelAuthListener = auth
-        .onIdTokenChanged(async userToken => {
-            if (userToken) {
-              const userData = await mapUserData(userToken);
-              setUserCookie(userData);
-              setUser(userData);
-            } else {
-              removeUserCookie();
-              setUser();
-            }
-        });
+    if(!authListening) {
+      const cancelAuthListener = auth
+      .onIdTokenChanged(async userToken => {
+          if (userToken) {
+            const userData = await mapUserData(userToken);
+            setUserCookie(userData);
+            setUser(JSON.parse(userData));
+          } else {
+            removeUserCookie();
+            setUser();
+          }
+      });
+      authListening = true
+    }
 
     const userFromCookie = getUserFromCookie();
     if (!userFromCookie) {

@@ -7,6 +7,9 @@ import Navbar from '../components/Navbar'
 import styles from '../styles/Demographics.module.css'
 import Link from 'next/link'
 
+// Variable to check if bound to authCheck
+var authBound = false
+
 export async function getServerSideProps(context) {
   const currLink = context.resolvedUrl
 
@@ -48,11 +51,15 @@ export default function Demographics(props) {
   const router = useRouter();
 
   useEffect(() => {
-    auth.onAuthStateChanged((authUser) => {
-      if (!authUser) {
-          router.push(`/login?redirect=${props.currUrl}`);
-      }
-    })
+    if (!authBound) {
+      auth.onAuthStateChanged((authUser) => {
+        if (!authUser) {
+            router.push(`/login?redirect=${props.currUrl}`);
+        }
+      })
+      authBound = true
+    }
+
   }, [])
 
   return (
