@@ -17,14 +17,10 @@ export default async function handler(req, res) {
 
   const data = req.body
   const pollID = data._id
-  const pollQuestion = data.question
   const voteIndex = data.index
   let user = data.user
   const userId = user._id
-  user.votedPolls.push({
-    id: pollID,
-    question: pollQuestion
-  })
+  user.votedPolls.push(pollID)
 
   const response = await db.collection("polls").updateOne(
     {
@@ -50,10 +46,7 @@ export default async function handler(req, res) {
       "_id": ObjectID(userId),
     },
     {
-      $push: { "votedPolls" : {
-        "id" : pollID,
-        "question" : pollQuestion
-      } }
+      $push: { "votedPolls" : pollID }
     },
     {
       upsert: true

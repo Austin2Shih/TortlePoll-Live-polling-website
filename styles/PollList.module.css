@@ -6,14 +6,12 @@
 }
 
 .scrollBox {
-    height: 100%;
+    max-height: 22rem;
     background-color: var(--main);
     border-radius: 6px;
     border-style: solid;
     border-width: 2px;
     overflow-y: scroll;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
 }
 
 .input{
@@ -47,4 +45,20 @@
     padding-right: 1.5rem;
     line-height: 0;
     margin-bottom: -4px;
+}
+
+.pollInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-weight: 400;
+    border-bottom: solid;
+    border-width: 1px;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    margin-left: 1rem;
+}
+
+.button:hover {
+    background-color: var(--background);
 }

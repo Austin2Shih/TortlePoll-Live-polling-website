@@ -88,7 +88,7 @@ export default function Vote(props) {
         if (user?.mongoData && pollID) {
             const votedPolls = user.mongoData.votedPolls
             votedPolls.forEach((poll) => {
-                if (poll.id == pollID) {
+                if (poll == pollID) {
                     router.push(`/poll?id=${pollID}`)
                 }
             })

@@ -4,6 +4,7 @@ import { useUser } from '../util/auth/useUser';
 import styles from '../styles/Pollform.module.css'
 import {AiOutlinePlus, AiOutlineMinus} from "react-icons/ai"
 import Switch from "react-switch";
+import { updateUserCookiePolls } from '../util/auth/userCookie';
 
 function makeOptionsList(count) {
   const optionsList = []
@@ -78,7 +79,7 @@ export default function PollForm() {
       })
   
       const res = await response.json()
- 
+      updateUserCookiePolls(`${res.pollID}`)
       setPollLink(`/vote?id=${res.pollID}`)
       setLinkText("Access your poll here!")
     }

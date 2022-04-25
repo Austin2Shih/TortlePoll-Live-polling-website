@@ -1,7 +1,6 @@
 import { useState } from 'react'; 
-import { useRouter } from "next/router";
-import { useUser } from '../util/auth/useUser';
 import styles from '../styles/PollList.module.css'
+import Link from 'next/link'
 
 export default function PollList(props) {
     const [query, setQuery] = useState("")
@@ -26,8 +25,16 @@ export default function PollList(props) {
                 {
                     data.map((poll, index) => {
                         return (
-                        <div key={index}>
-                            
+                        <div key={index} className={styles.button}>
+                          <Link href={`poll?id=${poll.id}`}>
+                            <a>
+                              <div className={styles.pollInfo}>
+                                <p>{poll.question}</p>
+                                <p>{poll.votes}</p>
+                            </div>
+                            </a>
+                          </Link>
+
                         </div>
                         )
                     })

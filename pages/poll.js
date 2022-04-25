@@ -98,7 +98,7 @@ export default function Poll(props) {
             let voted = false;
             const votedPolls = user.mongoData.votedPolls
             votedPolls.forEach((poll) => {
-                if (poll.id == pollID) {
+                if (poll == pollID) {
                     voted = true;
                 }
             })
