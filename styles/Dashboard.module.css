@@ -5,11 +5,49 @@
     margin-right: auto;
     margin-top: 3vh;
     height: auto;
-    display: flex;
-    justify-content: center;
     border-radius: 6px;
     background-color: var(--main);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     min-height: 88vh;
-    padding-top: 3rem;
+    padding-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.menu {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 2rem;
+    justify-content: space-evenly;
+}
+
+.button {
+    background: none;
+    border-style: none;
+    padding-bottom: 0.8rem;
+    font-size: 1rem;
+    width: 100%;
+    transition: all 0.1s;
+    text-align: center;
+}
+
+.button:hover {
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+}
+
+.activeButton {
+    background: none;
+    border-style: none;
+    padding-bottom: 0.8rem;
+    font-size: 1rem;
+    width: 100%;
+    transition: all 0.1s;
+    text-align: center;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
 }

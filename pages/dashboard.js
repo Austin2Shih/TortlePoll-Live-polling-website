@@ -1,5 +1,4 @@
-import { useUser } from '../util/auth/useUser';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { auth } from '../util/firebase';
 import { useRouter } from "next/router";
 import Navbar from '../components/Navbar';
@@ -65,7 +64,15 @@ export async function getServerSideProps(context) {
 
 export default function Dashboard(props){
   const router = useRouter();
+  const [madePolls, setMadePolls] = useState(true)
 
+  function displayPolls() {
+    setMadePolls(true)
+  }
+
+  function displayVotes() {
+    setMadePolls(false)
+  }
 
   useEffect( ()=> {
     if (!authBound) {
@@ -83,7 +90,15 @@ export default function Dashboard(props){
     <div >
       <Navbar></Navbar>
       <div className={styles.main}>
-        <PollList polls={props.polls}></PollList>
+        <div className={styles.menu}>
+          <button onClick={displayPolls} className={(madePolls)? styles.activeButton : styles.button}>Your polls</button>
+          <button onClick={displayVotes} className={(!madePolls)? styles.activeButton : styles.button}>Previous votes</button>
+        </div>
+        {
+          (madePolls)?
+          <PollList polls={props.polls}></PollList>:
+          <PollList polls={props.votedPolls}></PollList>
+        }
       </div>
     </div>
   )

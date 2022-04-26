@@ -9,6 +9,9 @@ var voted = false
 
 export default function VoteDisplay(props) {
     const {user, logout} = useUser();
+    useEffect(() => {
+      voted = false
+    }, [])
 
     const router = useRouter();
 

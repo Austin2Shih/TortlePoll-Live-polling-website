@@ -33,7 +33,10 @@ export default function FirebaseAuth(props) {
     signInWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
         console.log("logged in!")
-        router.push(props.url);
+        setTimeout(() => {  
+          router.push(props.url);
+        }, 3000);
+        
       }).catch((error) => {
         setError(error.message)
         console.log("ERROR: ", error)

@@ -5,6 +5,12 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+.listContainer {
+    margin-left: 10rem;
+    width: calc(100% - 10rem);
+    display: flex;
+}
+
 .list {
     margin-top: 0rem;
     min-height: 100%;
@@ -75,6 +81,56 @@
 }
 
 .logoContainer {
-    width: 40px;
-    margin-left: -10px;
+    position: absolute;
+    width: 130px;
+    left: 20px;
+    top: 0;
 }
+
+.menuIcon {
+    position: absolute;
+    display: flex;
+    font-size: 2.2rem;
+    top: 8px;
+    right: 20px;
+}
+
+.closeMenuIcon {
+    position: absolute;
+    display: flex;
+    font-size: 1.6rem;
+    top: 12px;
+    right: 24px;
+}
+
+.menuIcon:hover {
+    transform: scale(1.05);
+}
+
+.closeMenuIcon:hover {
+    transform: scale(1.05);
+}
+
+.mobileListContainer {
+    background-color: var(--mobileBackground);
+    opacity: 0.95;
+    position: absolute;
+    top: 3.2rem;
+    right: 0px;
+    width: 100%;
+    height: 70%;
+    z-index: 1000;
+}
+
+.mobileList {
+    padding-top: 2rem;
+    list-style: none;
+    text-align: center;
+}
+
+.mobileListItem {
+    margin-bottom: 2rem;
+    color: white;
+}
+
+

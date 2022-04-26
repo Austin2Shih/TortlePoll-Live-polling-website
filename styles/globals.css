@@ -25,6 +25,7 @@ a {
   --green: #2BAE28;
   --blue: #23B5D6;
   --red: #d95d4a;
+  --mobileBackground: #454545;
 }
 
 ::placeholder {
@@ -61,8 +62,12 @@ input[type="password"]
   font-size:1.1rem;
 }
 
+button{
+  font-family: Montserrat, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen;
+}
+
 ::-webkit-scrollbar {
-  width: 20px;
+  width: 18px;
 }
 
 ::-webkit-scrollbar-track {

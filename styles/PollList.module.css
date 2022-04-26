@@ -6,7 +6,7 @@
 }
 
 .scrollBox {
-    max-height: 22rem;
+    height: 30rem;
     background-color: var(--main);
     border-radius: 6px;
     border-style: solid;
@@ -33,6 +33,7 @@
     border-style: solid;
     border-width: 1px;
     margin-bottom: 10px;
+    display: flex;
 }
 
 .labels {
