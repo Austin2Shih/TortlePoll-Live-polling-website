@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useUser } from '../util/auth/useUser';
 import styles from '../styles/Pollform.module.css'
-import {AiOutlinePlus, AiOutlineMinus} from "react-icons/ai"
+import {AiOutlinePlus, AiOutlineMinus, AiOutlineCopy} from "react-icons/ai"
 import Switch from "react-switch";
 import { updateUserCookiePolls } from '../util/auth/userCookie';
 
@@ -80,7 +80,7 @@ export default function PollForm() {
   
       const res = await response.json()
       updateUserCookiePolls(`${res.pollID}`)
-      setPollLink(`/vote?id=${res.pollID}`)
+      setPollLink(`${process.env.NEXT_PUBLIC_VERCEL_URL}/vote?id=${res.pollID}`)
       setLinkText("Access your poll here!")
     }
 
@@ -152,7 +152,14 @@ export default function PollForm() {
             </button>
           </form>
           { pollLink &&
-            <div>
+            <div className={styles.sharePoll}>
+              <h3>Share your poll</h3>
+              <div className={styles.linkDisplayContainer}>
+                <div className={styles.linkHolder}>
+                  <p>{pollLink}</p>
+                </div>
+                <AiOutlineCopy className={styles.copySymbol}></AiOutlineCopy>
+              </div>
               <Link href={pollLink} target="_blank" rel="noreferrer noopener">{linkText}</Link>
             </div> }
         </div>
