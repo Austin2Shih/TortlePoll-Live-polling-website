@@ -80,7 +80,7 @@ export default function PollForm() {
   
       const res = await response.json()
       updateUserCookiePolls(`${res.pollID}`)
-      setPollLink(`${process.env.NEXT_PUBLIC_VERCEL_URL}/vote?id=${res.pollID}`)
+      setPollLink(`/vote?id=${res.pollID}`)
       setLinkText("Access your poll here!")
     }
 
@@ -156,7 +156,7 @@ export default function PollForm() {
               <h3>Share your poll</h3>
               <div className={styles.linkDisplayContainer}>
                 <div className={styles.linkHolder}>
-                  <p>{pollLink}</p>
+                  <p>{`${process.env.NEXT_PUBLIC_VERCEL_URL}${pollLink}`}</p>
                 </div>
                 <AiOutlineCopy className={styles.copySymbol}></AiOutlineCopy>
               </div>
