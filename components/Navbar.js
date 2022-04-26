@@ -87,7 +87,7 @@ export default function Navbar() {
                             <Link href="/create_poll">Create poll</Link>
                         </li>
                         <li className={styles.listItem}>
-                            <Link href="/browse_polls">Broswe polls</Link>
+                            <Link href="/browse_polls">Browse polls</Link>
                         </li>
                     </ul>
                     <ul className={styles.rightList}>
@@ -107,7 +107,7 @@ export default function Navbar() {
                                     <Link href="/create_poll">Create poll</Link>
                                 </li>
                                 <li className={styles.mobileListItem}>
-                                    <Link href="/browse_polls">Broswe polls</Link>
+                                    <Link href="/browse_polls">Browse polls</Link>
                                 </li>
                                 <li className={styles.mobileListItem}>
                                     {dashboardButton}
