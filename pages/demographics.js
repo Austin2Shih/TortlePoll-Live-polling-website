@@ -6,6 +6,7 @@ import { useUser } from '../util/auth/useUser';
 import Navbar from '../components/Navbar'
 import styles from '../styles/Demographics.module.css'
 import Link from 'next/link'
+import { updateUserCookieEthnicity, updateUserCookieGender } from "../util/auth/userCookie";
 
 // Variable to check if bound to authCheck
 var authBound = false
@@ -62,6 +63,8 @@ export default function Demographics(props) {
 
   }, [])
 
+  console.log("DEMOGRAPHICS PAGE", user)
+
   return (
     <div className={styles.bigContainer}>
       <Navbar></Navbar>
@@ -78,14 +81,16 @@ export default function Demographics(props) {
                   title={'What ethnicity do you identify with?'}
                   options={ethnicities} 
                   initialSelection={(user.mongoData.info.ethnicity)? user.mongoData.info.ethnicity : "Select ethnicity"}
-                  apiCall={'update_ethnicity'}>
+                  apiCall={'update_ethnicity'}
+                  cookieUpdate={updateUserCookieEthnicity}>
                 </Dropdown>
                 <Dropdown 
                   user={user}
                   title={'What gender do you identify as?'}
                   options={genders} 
                   initialSelection={(user.mongoData.info.gender)? user.mongoData.info.gender : "Select gender"}
-                  apiCall={'update_gender'}>
+                  apiCall={'update_gender'}
+                  cookieUpdate={updateUserCookieGender}>
                 </Dropdown>
 
               </div>

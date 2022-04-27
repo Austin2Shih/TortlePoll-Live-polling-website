@@ -14,7 +14,7 @@ var authListening = false
 export const mapUserData = async user => {
   const { uid, email } = user;
   const token = await user.getIdToken(true);
-  const response = await fetch(`/api/get_user`, {
+  const response = await fetch(`/api/create_get_user`, {
     method: 'POST',
     body: JSON.stringify({
         "email" : `${user.email}`,
@@ -56,6 +56,7 @@ const useUser = () => {
     if(!authListening) {
       const cancelAuthListener = auth
       .onIdTokenChanged(async userToken => {
+          console.log("UPDATING COOKIES")
           if (userToken) {
             const userData = await mapUserData(userToken);
             setUserCookie(userData);

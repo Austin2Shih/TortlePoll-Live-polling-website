@@ -12,6 +12,18 @@ export function updateUserCookiePolls(data) {
   setUserCookie(JSON.stringify(user))
 }
 
+export function updateUserCookieEthnicity(data) {
+  let user = getUserFromCookie()
+  user.mongoData.info.ethnicity = data
+  setUserCookie(JSON.stringify(user))
+}
+
+export function updateUserCookieGender(data) {
+  let user = getUserFromCookie()
+  user.mongoData.info.gender = data
+  setUserCookie(JSON.stringify(user))
+}
+
 export function getUserFromCookie() {
   const cookie = cookies.get('auth');
   if (!cookie) {

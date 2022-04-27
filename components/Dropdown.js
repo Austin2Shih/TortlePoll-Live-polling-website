@@ -31,6 +31,7 @@ export default function Dropdown( props ) {
     }
 
     function submitForm(option) {
+        props.cookieUpdate(option)
         fetch(`/api/${props.apiCall}`, {
             method: 'POST',
             body: JSON.stringify({

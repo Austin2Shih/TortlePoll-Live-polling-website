@@ -9,6 +9,14 @@ export default async function handler(req, res) {
           "email": email
       }).catch()
 
+
   const output = JSON.parse(JSON.stringify(data))
-  res.json(output);
+  if (output) {
+    res.json(output);
+  } else {
+    res.json({
+      email: null
+    })
+  }
+  
 }

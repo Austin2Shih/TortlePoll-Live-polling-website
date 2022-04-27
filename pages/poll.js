@@ -100,15 +100,15 @@ export default function Poll(props) {
 
     function handleEthnicityFilter(ethnicity, state) {
         ethnicityFilters[ethnicity] = state
-        setChart(<DataChart data={getFilterdData()}></DataChart>)
+        setChart(<DataChart data={getFilteredData()}></DataChart>)
     }
 
     function handleGenderFilter(gender, state) {
         genderFilters[gender] = state
-        setChart(<DataChart data={getFilterdData()}></DataChart>)
+        setChart(<DataChart data={getFilteredData()}></DataChart>)
     }
 
-    function getFilterdData() {
+    function getFilteredData() {
         const filterList1 = []
         for (var key in ethnicityFilters) {
             if (ethnicityFilters[key]) {
@@ -215,17 +215,14 @@ export default function Poll(props) {
         <div>
             <Navbar></Navbar>
             <div className={styles.main}>
-                <div className={styles.header}>
-                    <h2 className={styles.title}>{data.question}</h2>
-                    <DropdownFilter
+                <DropdownFilter
                     title={'Filters'}
                     ethnicityUpdate={handleEthnicityFilter}
                     genderUpdate={handleGenderFilter}
                     ethnicities={ethnicities}
                     genders={genders}>
-                    </DropdownFilter>
-                </div>
-
+                </DropdownFilter>
+                <h2 className={styles.title}>{data.question}</h2>
                 <p className={styles.voteCount}>{`Total votes - ${numVotes}`}</p>
                 <div>
                     {chart}

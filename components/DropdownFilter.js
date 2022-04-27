@@ -86,7 +86,7 @@ export default function Dropdown( props ) {
         <div ref={wrapperRef} className={styles.main}>
             <p className={styles.label}>{props.title}</p>
             <div onClick={handleClick} className={styles.DropdownButton}>
-                Select filters 
+                <div className={styles.buttonText}>Select filters </div>
                 <div className={styles.arrow}>
                     {(display)? (<FiChevronUp></FiChevronUp>) : (<FiChevronDown></FiChevronDown>)}
                 </div>              
