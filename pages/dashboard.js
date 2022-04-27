@@ -96,8 +96,8 @@ export default function Dashboard(props){
         </div>
         {
           (madePolls)?
-          <PollList polls={props.polls}></PollList>:
-          <PollList polls={props.votedPolls}></PollList>
+          <PollList pageType='poll' polls={props.polls}></PollList>:
+          <PollList pageType='poll' polls={props.votedPolls}></PollList>
         }
       </div>
     </div>

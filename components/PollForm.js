@@ -5,6 +5,7 @@ import styles from '../styles/Pollform.module.css'
 import {AiOutlinePlus, AiOutlineMinus, AiOutlineCopy} from "react-icons/ai"
 import Switch from "react-switch";
 import { updateUserCookiePolls } from '../util/auth/userCookie';
+import { animateScroll as scroll } from 'react-scroll/modules';
 
 function makeOptionsList(count) {
   const optionsList = []
@@ -33,6 +34,7 @@ export default function PollForm() {
   const [options, setOptions] = useState(makeOptionsList(listSize))
   const [pollLink, setPollLink] = useState(null)
   const [linkText, setLinkText] = useState("")
+  const [copyText, setCopyText] = useState(null)
   const [isPrivate, setPrivate] = useState(false);
 
   function handleSwitch(checked) {
@@ -49,6 +51,19 @@ export default function PollForm() {
         listSize--;
         setOptions((makeOptionsList(listSize)))
       }
+    }
+
+    function copyToClipboard() {
+      const tempInput = document.createElement('input')
+      tempInput.value = `${process.env.NEXT_PUBLIC_VERCEL_URL}${pollLink}`
+      document.body.appendChild(tempInput)
+      tempInput.select()
+      document.execCommand('copy')
+      document.body.removeChild(tempInput)
+      setCopyText('Copied to clipboard')
+      setTimeout(() => {  
+        setCopyText(null)
+      }, 500);
     }
 
     async function onSubmit(form) {
@@ -81,7 +96,10 @@ export default function PollForm() {
       const res = await response.json()
       updateUserCookiePolls(`${res.pollID}`)
       setPollLink(`/vote?id=${res.pollID}`)
-      setLinkText("Access your poll here!")
+      setLinkText("Access your poll here")
+      setTimeout(() => {  
+        scroll.scrollToBottom();
+      }, 300);
     }
 
     return (
@@ -154,13 +172,20 @@ export default function PollForm() {
           { pollLink &&
             <div className={styles.sharePoll}>
               <h3>Share your poll</h3>
-              <div className={styles.linkDisplayContainer}>
+              <div onClick={()=> {copyToClipboard()}} className={styles.linkDisplayContainer}>
                 <div className={styles.linkHolder}>
-                  <p>{`${process.env.NEXT_PUBLIC_VERCEL_URL}${pollLink}`}</p>
+                  <p id='voteLink'>{`${process.env.NEXT_PUBLIC_VERCEL_URL}${pollLink}`}</p>
                 </div>
                 <AiOutlineCopy className={styles.copySymbol}></AiOutlineCopy>
               </div>
-              <Link href={pollLink} target="_blank" rel="noreferrer noopener">{linkText}</Link>
+              { copyText &&
+                <p style={{textAlign: 'center', lineHeight: 0}}>{copyText}</p>
+              }
+              <Link href={pollLink} target="_blank" rel="noreferrer noopener">
+                <a>
+                  <button className={styles.acessPollButton}>{linkText}</button>
+                </a>
+              </Link>
             </div> }
         </div>
       </div>

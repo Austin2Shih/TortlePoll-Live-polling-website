@@ -39,7 +39,7 @@ export default function Browsepolls(props) {
     <div>
       <Navbar></Navbar>
       <div className={styles.main}>
-        <PollList polls={props.polls}></PollList>
+        <PollList pageType='vote' polls={props.polls}></PollList>
       </div>
     </div>
   )

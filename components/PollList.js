@@ -38,7 +38,7 @@ export default function PollList(props) {
               filterData(props.polls).map((poll, index) => {
                   return (
                   <div key={index} className={styles.button}>
-                    <Link href={`/poll?id=${poll.id}`}>
+                    <Link href={`/${props.pageType}?id=${poll.id}`}>
                       <a>
                         <div className={styles.pollInfo}>
                           <div>

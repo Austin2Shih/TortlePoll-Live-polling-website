@@ -1,0 +1,63 @@
+.main {
+  width: 21rem;
+  font-size: 0.85rem;
+}
+
+.DropdownButton {
+    z-index: 500;
+    border-radius: 6px;
+    padding: 1.1rem;
+    padding-left: 1.4rem;
+    padding-right: 1.4rem;
+    width: 17rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+    position: relative;
+    cursor: pointer;
+  }
+
+  .elementsContainer {
+    position: absolute;
+    margin-top: 10px;
+    border-radius: 6px;
+    width: 17rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+    display: flex;
+    flex-direction: column;
+    gap: 0rem;
+    z-index: 1000;
+    background-color: white;
+  }
+
+  .containerElement:hover {
+    background-color: aquamarine;
+  }
+
+  .selectedContainerElement {
+    background-color: aquamarine;
+  }
+
+
+  .text {
+    padding-right: 1.4rem;
+    padding-left: 1.4rem;
+  }
+
+  .arrow {
+    position: absolute;
+    right: 1rem;
+    top: 29%;
+    font-size: 1.4rem;
+  }
+
+  .label {
+    font-weight: 500;
+    line-height: 0;
+  }
+
+  .optionLabel {
+    background-color: var(--background);
+    font-weight: 500;
+    line-height: 0;
+  }
+
+  
