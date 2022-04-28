@@ -1,5 +1,5 @@
 ## TortlePoll
-
+TortlePoll is fully functional and deployed on Vercel [here](https://live-polling-website.vercel.app/)
 [TortlePoll](https://live-polling-website.vercel.app/) is a live polling website where users can create and take polls in an instant.
 
 **Features**
@@ -11,7 +11,7 @@
 ## Note for IGN
 TortlePoll was my first time using technologies such as Next.js, Firebase Auth, MongoDB, and Pusher. During the past two weeks, I've had to learn about serverless functions, user persistence with authentication, and controlling web-sockets through countless online tutorials which were unlikely to have followed all of the best web development practices.
 
-This website is a collection of the information that I've absorbed over the past two weeks and I tried implementing as many cool featurs as I could while making the site relatively reliable. That being said, during some tests, I have run into issues where an element of a page won't load probably due to an authentication issue. This is rare, but in the case that the one time you try to demo my project it fails, please stay patient with my work and refresh the page.
+This website is a collection of the information that I've absorbed over the past two weeks and I tried implementing as many cool features as I could while making the site reliable. That being said, during some tests, I have run into issues where an element of a page won't load probably due to an authentication issue. This is rare, but in the case that the one time you try to demo my project it fails, please stay patient with my work and refresh the page.
 
 ![Image of poll results](/public/home-images/Poll-pic.PNG)
 
