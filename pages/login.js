@@ -102,7 +102,9 @@ export default function FirebaseAuth(props) {
       <div className={styles.container}>
           <div className={styles.titleContainer}>
             <div className={styles.logoContainer}>
-              <Image src={logo}></Image>
+              <div className={styles.imageContainer}>
+                <Image src={logo}></Image>
+              </div>
             </div>
             <h1 className={styles.title}>Log in</h1>
           </div>

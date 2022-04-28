@@ -26,6 +26,7 @@ a {
   --blue: #23B5D6;
   --red: #d95d4a;
   --mobileBackground: #454545;
+  --subtitle: #caf6fa;
 }
 
 ::placeholder {
