@@ -56,7 +56,6 @@ const useUser = () => {
     if(!authListening) {
       const cancelAuthListener = auth
       .onIdTokenChanged(async userToken => {
-          console.log("UPDATING COOKIES")
           if (userToken) {
             const userData = await mapUserData(userToken);
             setUserCookie(userData);

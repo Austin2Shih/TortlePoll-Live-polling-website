@@ -27,7 +27,6 @@ var authBound = false
 
 // Subscribing to messenger channel
 const channel = pusher.subscribe('polling-development')
-console.log("PUSHER HAPPENED")
 
 const ethnicities = [
     "American Indian or Alaska Native",
@@ -110,6 +109,7 @@ export default function Poll(props) {
     }
 
     function getFilteredData() {
+        console.log(data)
         const filterList1 = []
         for (var key in ethnicityFilters) {
             if (ethnicityFilters[key]) {
@@ -163,7 +163,6 @@ export default function Poll(props) {
             authBound = true
           }
 
-        if (!bound) {
             channel.bind(`new-vote-${pollID}`, async () => {
                 await fetch(`/api/get_votes`, {
                     method: 'POST',
@@ -177,13 +176,11 @@ export default function Poll(props) {
                     await response.json().then((res) => {
                         setData(res)
                         setNumVotes(countVotes(res.options))
-                        setChart(<DataChart data={getFilteredData()}></DataChart>)
+                        setChart(<DataChart data={res}></DataChart>)
                     })
                 })
             }) 
                        
-            bound = true
-        }
 
         if (user?.mongoData && pollID) {
             let voted = false;
@@ -197,11 +194,11 @@ export default function Poll(props) {
                 router.push(`/vote?id=${pollID}`)
             }
         }
-    }, [props, user, router])
+    }, [])
 
     function copyToClipboard() {
         const tempInput = document.createElement('input')
-        tempInput.value = `${process.env.NEXT_PUBLIC_VERCEL_URL}${props.url}`
+        tempInput.value = `${process.env.NEXT_PUBLIC_VERCEL_URL}/vote${props.url.slice(5)}`
         document.body.appendChild(tempInput)
         tempInput.select()
         document.execCommand('copy')
@@ -231,7 +228,7 @@ export default function Poll(props) {
                 <h3 style={{marginTop: '3rem'}}>Share this poll</h3>
                 <div onClick={()=> {copyToClipboard()}} className={copyStyles.linkDisplayContainer}>
                     <div className={copyStyles.linkHolder}>
-                        <p id='voteLink'>{`${process.env.NEXT_PUBLIC_VERCEL_URL}${props.url}`}</p>
+                        <p id='voteLink'>{`${process.env.NEXT_PUBLIC_VERCEL_URL}/vote${props.url.slice(5)}`}</p>
                     </div>
                     <AiOutlineCopy className={copyStyles.copySymbol}></AiOutlineCopy>
                 </div>

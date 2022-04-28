@@ -35,12 +35,7 @@ export default async function handler(req, res) {
       upsert: true
     }
     ).then(async () => {
-      const res = await pusher.trigger('polling-development', `new-vote-${pollID}`, {}).then((r) => {
-
-      })
-        .catch((error) => {
-      console.log(error)
-    })
+      await pusher.trigger('polling-development', `new-vote-${pollID}`, {})
   })
 
   await dbUsers.collection("users").updateOne(
