@@ -1,34 +1,32 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## TortlePoll
+TortlePoll is fully functional and deployed on Vercel [here](https://live-polling-website.vercel.app/)
 
-## Getting Started
+[TortlePoll](https://live-polling-website.vercel.app/) is a live polling website where users can create and take polls in an instant.
 
-First, run the development server:
+**Features**
+- Live results updating in the front-end
+- Filter results by demographic group
+- Browse and take public polls
+- Keep track of polls you've created and voted for
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+## Note for IGN
+TortlePoll was my first time using technologies such as Next.js, Firebase Auth, MongoDB, and Pusher. During the past two weeks, I've had to learn about serverless functions, user persistence with authentication, and controlling web-sockets through countless online tutorials which were unlikely to have followed all of the best web development practices.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This website is a collection of the information that I've absorbed over the past two weeks and I tried implementing as many cool features as I could while making the site reliable. That being said, during some tests, I have run into issues where an element of a page won't load probably due to an authentication issue. This is rare, but in the case that the one time you try to demo my project it fails, please stay patient with my work and refresh the page.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+![Image of poll results](/public/home-images/Poll-pic.PNG)
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## Technologies used
+#### Next.js
+Using Next.js allowed me to have an easier time handling the backend of my project and deploy it to Vercel. However, there were a few issues that came with having Server Side Rendering(SSR) such as many libraries not being compatible with SSR as well as many web development tutorials made for React.js that could not easily translate to Next.js.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+#### MongoDB
+I used MongoDB to store user data and poll data. After succesfully integrating MongoDB into my Next.js app, I created custom endpoints in the app allowing me to query the database and efficiently retrieve information.
 
-## Learn More
+#### Pusher
+Pusher was the core of my project since we needed live polling. After doing a lot of research on web-sockets, I realized that those options were not as easily done with Next.js since Next.js only supports serverless functions while most web-socket solutions online required you to be running Express.js servers. Also, due to older documentation on both Pusher and Vercel's websites, I ended up having to alter the documented code a lot before I could get reliable live updating.
 
-To learn more about Next.js, take a look at the following resources:
+#### Firebase Auth
+Firebase Auth itself was straightforward to implement, but it was user persistence that was difficult. After doing tons of research on user authentication persistence, I still do not know if the way I used cookies to keep track of user data and authentication state is the best way to do it in the industry.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
