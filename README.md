@@ -1,34 +1,17 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## TortlePoll
 
-## Getting Started
+TortlePoll is a live polling website where users can create and take polls in an instant.
 
-First, run the development server:
+### Features
+- Live results updating in the front-end
+- Filter results by demographic group
+- Browse and take public polls
+- Keep track of polls you've created and voted for
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+## Note for IGN
+TortlePoll was my first time using technologies such as Next.js, Firebase Auth, MongoDB, and Pusher. During the past two weeks, I've had to learn about serverless functions, user persistence with authentication, and controlling web-sockets through countless online tutorials which were unlikely to have followed all of the best web development practices.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This website is a collection of the information that I've absorbed over the past two weeks and I tried implementing as many cool featurs as I could while making the site relatively reliable. That being said, during some tests, I have run into issues where a quick refresh of the page will fix the problem. This is rare, but in the case that the one time you try to demo my project it fails, please stay patient with my work and refresh the page.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Technologies used
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
