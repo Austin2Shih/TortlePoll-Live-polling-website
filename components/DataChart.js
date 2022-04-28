@@ -107,12 +107,12 @@ export default function PollDisplay(props) {
           </div>
           <div className={styles.votes}>
             {
-            sortedOptions.map((option) => {
+            sortedOptions.map((option, index) => {
               const votes = option.votes;
               const votesText = (votes == 1)? 'vote' : 'votes';
               const percentage = Math.round((votes/countVotes(props.data.options)*100 + Number.EPSILON) * 100) / 100;
               const output = `${percentage}% (${votes} ${votesText})`
-            return <div className={styles.voteBox}>
+            return <div key={index} className={styles.voteBox}>
                     <p style={{overflowWrap: 'none'}}>{output}</p>
                   </div>
           })}
