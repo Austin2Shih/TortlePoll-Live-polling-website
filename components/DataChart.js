@@ -35,16 +35,15 @@ function generateColors(num) {
   return output;
 }
 
+let barThickness = 50
+
 export default function PollDisplay(props) {
     const sortedOptions = props.data.options.sort((a, b) => {
       return b.votes - a.votes;
     })
     const data = {
       labels: sortedOptions.map((option) => {
-          const votes = option.votes;
-          const votesText = (votes == 1)? 'vote' : 'votes';
-          const percentage = Math.round((votes/countVotes(props.data.options)*100 + Number.EPSILON) * 100) / 100;
-          const output = `    ${option.option}               ${percentage}% (${votes} ${votesText})`
+          const output = `    ${option.option}`
           return output;
         }),
         datasets: [{
@@ -53,13 +52,13 @@ export default function PollDisplay(props) {
           }),
           backgroundColor: generateColors(props.data.options.length),
           color: 'white',
-          categoryPercentage: 1.0,
-          barPercentage: 0.9,
+          barThickness: barThickness,
         }]
       
     }
 
     const options = {
+      responsive: true,
       maintainAspectRatio: false,
       indexAxis: 'y',
       scales: {
@@ -71,7 +70,8 @@ export default function PollDisplay(props) {
             font: {
               size: 18,
               family: 'Montserrat, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen',
-            }
+            },
+            lineWidth: 30,
           },
           grid: {
             display: false
@@ -82,7 +82,6 @@ export default function PollDisplay(props) {
           display: false
         },
       },
-      responsive: true,
 
       // Elements options apply to all of the options unless overridden in a dataset
       // In this case, we are setting the border of each horizontal bar to be 2px wide
@@ -98,15 +97,26 @@ export default function PollDisplay(props) {
         }
       },
 
-
-
-
     }
 
     return (
       <div className={styles.flexContainer}>
-        <div className={styles.barContainer}>
-          <Bar data={data} options={options}/>
+        <div className={styles.barMain}>
+          <div className={styles.barContainer} style={{height: (props.data.options.length * (barThickness + 5) + 32) + "px" }}>
+            <Bar data={data} options={options}/>
+          </div>
+          <div className={styles.votes}>
+            {
+            sortedOptions.map((option) => {
+              const votes = option.votes;
+              const votesText = (votes == 1)? 'vote' : 'votes';
+              const percentage = Math.round((votes/countVotes(props.data.options)*100 + Number.EPSILON) * 100) / 100;
+              const output = `${percentage}% (${votes} ${votesText})`
+            return <div className={styles.voteBox}>
+                    <p style={{overflowWrap: 'none'}}>{output}</p>
+                  </div>
+          })}
+          </div>
         </div>
         <div className={styles.donutContainer}>
           <Doughnut data={data} options={{plugins: {

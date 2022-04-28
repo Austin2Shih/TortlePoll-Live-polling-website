@@ -27,6 +27,7 @@ var authBound = false
 
 // Subscribing to messenger channel
 const channel = pusher.subscribe('polling-development')
+console.log("PUSHER HAPPENED")
 
 const ethnicities = [
     "American Indian or Alaska Native",

@@ -36,7 +36,9 @@ export default async function handler(req, res) {
     }
     ).then(async () => {
       const res = await pusher.trigger('polling-development', `new-vote-${pollID}`, {}).then((r) => {
-    }).catch((error) => {
+
+      })
+        .catch((error) => {
       console.log(error)
     })
   })

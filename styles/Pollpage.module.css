@@ -30,11 +30,31 @@
     gap: 7%;
 }
 
+.barMain {
+    width: 55%;
+    display: flex;
+    flex-direction: row;
+}
+
 .barContainer {
     margin-top: -0.8rem;
     margin-left: -0.7rem;
-    min-width: 20rem;
-    width: 55%;
+    min-width: 16rem;
+    width: calc(100% - 10rem);
+    height: 340px;
+}
+
+.votes {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    width: 10rem;
+    margin-top: 2px;
+    gap: 4px;
+}
+
+.voteBox {
+    white-space: nowrap;
 }
 
 .donutContainer {
@@ -44,6 +64,12 @@
 }
 
 @media screen and (max-width: 680px) {
+    .barMain {
+        margin-top: 16px;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+    }
     .flexContainer {
         display: flex;
         flex-direction: column;
