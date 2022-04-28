@@ -27,7 +27,7 @@ export default function Home() {
       </div>
       <div className={styles.imageBlock}>
         <div className={styles.videoContainer}>
-        <iframe className={styles.vidFrame} frameborder="0" width="100%" height="100%" src="https://drive.google.com/file/d/1V-pbJNbonVQ2Rt86bwpyUJG9SUk2QCga/preview"></iframe>
+        <iframe className={styles.vidFrame} frameBorder="0" width="100%" height="100%" src="https://drive.google.com/file/d/1V-pbJNbonVQ2Rt86bwpyUJG9SUk2QCga/preview"></iframe>
         </div>
       </div>
     </div>
