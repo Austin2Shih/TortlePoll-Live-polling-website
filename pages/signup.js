@@ -7,6 +7,8 @@ import Image from 'next/image'
 import logo from '../public/cowboy_turtle.png'
 import Link from 'next/link';
 import {FcGoogle} from 'react-icons/fc'
+import NProgress from 'nprogress'
+
 
 const provider = new GoogleAuthProvider();
 
@@ -58,6 +60,7 @@ export default function SignUp(props) {
         .then(async (userCredential) => {
           await create_user(userCredential).then(() => {
             console.log("Success. The user is created in Firebase")
+            NProgress.start()
             setTimeout(() => {  
               router.push(`/demographics?redirect=${props.url}`); 
             }, 3000);
@@ -86,12 +89,14 @@ export default function SignUp(props) {
         })
         const res = await mongoUser.json()
         if (!res.email) {
+          NProgress.start()
           await create_user(userCredential).then(()=> {
             setTimeout(() => {  
               router.push(`/demographics?redirect=${props.url}`);
             }, 3000);
           })
         } else {
+          NProgress.start()
           setTimeout(() => {  
             router.push(props.url);
           }, 3000);

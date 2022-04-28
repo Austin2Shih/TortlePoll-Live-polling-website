@@ -13,20 +13,11 @@ import { countVotes } from '../util/pollHandling';
 import { AiOutlineCopy} from "react-icons/ai"
 import DropdownFilter from '../components/DropdownFilter'
 
-// Initializing Pusher
-var pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY, {
-    cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
-    useTLS: true,
-  })
-  
-// Variable to check if binded to Pusher
+  // Variable to check if binded to Pusher
 var bound = false
 
 // Variable to check if bound to authCheck
 var authBound = false
-
-// Subscribing to messenger channel
-const channel = pusher.subscribe('polling-development')
 
 const ethnicities = [
     "American Indian or Alaska Native",
@@ -162,24 +153,33 @@ export default function Poll(props) {
             })
             authBound = true
         }
-        // bind to pusher channel for live updates
-        channel.bind(`new-vote-${pollID}`, async () => {
-            await fetch(`/api/get_votes`, {
-                method: 'POST',
-                body: JSON.stringify({
-                    "_id" : `${pollID}`,
-                }),
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8"
-                }
-            }).then(async (response) => {
-                await response.json().then((res) => {
-                    setData(res)
-                    setNumVotes(countVotes(res.options))
-                    setChart(<DataChart data={res}></DataChart>)
-                })
+            // Initializing Pusher
+            var pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY, {
+                cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
+                useTLS: true,
             })
-        }) 
+            console.log("new pusher")
+
+            // Subscribing to messenger channel
+            const channel = pusher.subscribe('polling-development')
+            // bind to pusher channel for live updates
+            channel.bind(`new-vote-${pollID}`, async () => {
+                await fetch(`/api/get_votes`, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        "_id" : `${pollID}`,
+                    }),
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8"
+                    }
+                }).then(async (response) => {
+                    await response.json().then((res) => {
+                        setData(res)
+                        setNumVotes(countVotes(res.options))
+                        setChart(<DataChart data={res}></DataChart>)
+                    })
+                })
+            }) 
                        
         // check to see if user has not voted on this poll yet
         // if not, send back to voting page
@@ -195,7 +195,7 @@ export default function Poll(props) {
                 router.push(`/vote?id=${pollID}`)
             }
         }
-    }, [])
+    }, [user])
 
     function copyToClipboard() {
         const tempInput = document.createElement('input')

@@ -8,20 +8,8 @@ import { useRouter } from "next/router";
 import { auth } from '../util/firebase';
 import Navbar from '../components/Navbar'
 
-// Initializing Pusher
-var pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY, {
-    cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
-    useTLS: true,
-  })
-  
-// Variable to check if binded to Pusher
-var bound = false
-
 // Variable to check if bound to authCheck
 var authBound = false
-
-// Subscribing to messenger channel
-const channel = pusher.subscribe('polling-development')
 
 // Getting initial database read
 export async function getServerSideProps(context) {
@@ -64,27 +52,31 @@ export default function Vote(props) {
             authBound = true
         }
 
+        // Initializing Pusher
+        var pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY, {
+            cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
+            useTLS: true,
+        })
 
-        if (!bound) {
-            channel.bind(`new-vote-${pollID}`, async () => {
-                await fetch(`/api/get_votes`, {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        "_id" : `${pollID}`,
-                    }),
-                    headers: {
-                        "Content-type": "application/json; charset=UTF-8"
-                    }
-                }).then(async (response) => {
-                    await response.json().then((res) => {
-                        setPollData(<VoteDisplay data={res}></VoteDisplay>)
-                    })
+        // Subscribing to messenger channel
+        const channel = pusher.subscribe('polling-development')
+
+        channel.bind(`new-vote-${pollID}`, async () => {
+            await fetch(`/api/get_votes`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    "_id" : `${pollID}`,
+                }),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            }).then(async (response) => {
+                await response.json().then((res) => {
+                    setPollData(<VoteDisplay data={res}></VoteDisplay>)
                 })
-            }) 
+            })
+        }) 
                        
-            bound = true
-        }
-
         if (user?.mongoData && pollID) {
             const votedPolls = user.mongoData.votedPolls
             votedPolls.forEach((poll) => {
@@ -93,7 +85,7 @@ export default function Vote(props) {
                 }
             })
         }
-    }, [props, user, router])
+    }, [user])
     
     return (
         <div>

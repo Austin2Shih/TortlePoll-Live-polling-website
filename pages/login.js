@@ -7,6 +7,7 @@ import styles from '../styles/Auth.module.css'
 import Image from 'next/image'
 import logo from '../public/cowboy_turtle.png'
 import {FcGoogle} from 'react-icons/fc'
+import NProgress from "nprogress";
 
 const provider = new GoogleAuthProvider();
 
@@ -35,6 +36,7 @@ export default function FirebaseAuth(props) {
     signInWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
         console.log("logged in!")
+        NProgress.start()
         setTimeout(() => {  
           router.push(props.url);
         }, 3000);
@@ -80,12 +82,14 @@ export default function FirebaseAuth(props) {
         })
         const res = await mongoUser.json()
         if (!res.email) {
+          NProgress.start()
           await create_user(userCredential).then(()=> {
             setTimeout(() => {  
               router.push(`/demographics?redirect=${props.url}`);
             }, 3000); // wait 3 seconds before going in because the database needs some time to ensure that it is updated
           })
         } else {
+          NProgress.start()
           setTimeout(() => {  
             router.push(props.url);
           }, 3000);
