@@ -108,28 +108,28 @@ export default function Poll(props) {
         setChart(<DataChart data={getFilteredData()}></DataChart>)
     }
 
+    // Runs through the list of filters and gets a filtered count for each vote option
     function getFilteredData() {
-        console.log(data)
-        const filterList1 = []
+        const filterList1 = []  // list of ethnicites that are selected
         for (var key in ethnicityFilters) {
             if (ethnicityFilters[key]) {
                 filterList1.push(key)
             }
         }
 
-        const filterList2 = []
+        const filterList2 = []  // list of genders that are selected
         for (var key in genderFilters) {
             if (genderFilters[key]) {
                 filterList2.push(key)
             }
         }
-
+        // if no filters, return data as is
         if (filterList1.length + filterList2.length == 0) {
             console.log(data)
             return data;
         }
 
-        let output = JSON.parse(JSON.stringify(data))
+        let output = JSON.parse(JSON.stringify(data))   // create copy of data to send to charts so we don't alter the real data 
         for (let i = 0; i < output.options.length; i++) {
             let count = 0;
             for (let j = 0; j < output.options[i].voters.length; j++) {
@@ -161,27 +161,28 @@ export default function Poll(props) {
                 }
             })
             authBound = true
-          }
-
-            channel.bind(`new-vote-${pollID}`, async () => {
-                await fetch(`/api/get_votes`, {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        "_id" : `${pollID}`,
-                    }),
-                    headers: {
-                        "Content-type": "application/json; charset=UTF-8"
-                    }
-                }).then(async (response) => {
-                    await response.json().then((res) => {
-                        setData(res)
-                        setNumVotes(countVotes(res.options))
-                        setChart(<DataChart data={res}></DataChart>)
-                    })
+        }
+        // bind to pusher channel for live updates
+        channel.bind(`new-vote-${pollID}`, async () => {
+            await fetch(`/api/get_votes`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    "_id" : `${pollID}`,
+                }),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            }).then(async (response) => {
+                await response.json().then((res) => {
+                    setData(res)
+                    setNumVotes(countVotes(res.options))
+                    setChart(<DataChart data={res}></DataChart>)
                 })
-            }) 
+            })
+        }) 
                        
-
+        // check to see if user has not voted on this poll yet
+        // if not, send back to voting page
         if (user?.mongoData && pollID) {
             let voted = false;
             const votedPolls = user.mongoData.votedPolls

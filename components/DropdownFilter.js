@@ -4,7 +4,11 @@ import {FiChevronDown, FiChevronUp} from 'react-icons/fi'
 
 export default function Dropdown( props ) {
     const [display, setDisplay] = useState(false)
+
+    // Generates a boolean list corresponding to if each ethnicity is selected for filtering
     const [ethnicityState, setEthnicityStates] = useState(Array(props.ethnicities.length).fill(false))
+
+    // Needs to be a react hook so that we can cause it to re-render
     const [ethnicityDisplay, setEthnicityDisplay] = useState(props.ethnicities.map((option, index) => {
         return (
         <div className={ethnicityState[index]? styles.selectedContainerElement : styles.containerElement} key={index}
@@ -14,6 +18,7 @@ export default function Dropdown( props ) {
         )
     }))
 
+    // Same as above but for gender
     const [genderState, setGenderStates] = useState(Array(props.genders.length).fill(false))
     const [genderDisplay, setGenderDisplay] = useState(props.genders.map((option, index) => {
         return (
@@ -24,6 +29,7 @@ export default function Dropdown( props ) {
         )
     }))
 
+    // Checks if click outside dropdown menu happened and closes menu
     function useOutsideAlerter(ref) {
         useEffect(() => {
           function handleClickOutside(event) {
@@ -48,13 +54,16 @@ export default function Dropdown( props ) {
         setDisplay(!display)
     }
 
+    // Updates the filter for ethnicity (returns a function specific to the index)
+    // index is a string holding the ethnicity that is either being filtered or unfiltered
     function handleFilterE(index) {
         return () => {
+            // copy ethnicityState to temp to prevent overwriting of ethnicityState
             let temp = ethnicityState
-            temp[index] = !temp[index]
-            setEthnicityStates(temp)
-            props.ethnicityUpdate(props.ethnicities[index], temp[index])
-            setEthnicityDisplay(props.ethnicities.map((option, index) => {
+            temp[index] = !temp[index]      // flip state of the ethnicity filter
+            setEthnicityStates(temp)        // set state of ethnicity filter
+            props.ethnicityUpdate(props.ethnicities[index], temp[index])    // update corresponding filter element in parent
+            setEthnicityDisplay(props.ethnicities.map((option, index) => {  // re-render the dropdown to have the selected filters highlighted
                 return (
                 <div className={ethnicityState[index]? styles.selectedContainerElement : styles.containerElement} key={index}
                     option={option} onClick={handleFilterE(index)}>
@@ -65,6 +74,8 @@ export default function Dropdown( props ) {
         }
     }
 
+    // Updates the filter for gender
+    // index is a string holding the gender that is either being filtered or unfiltered
     function handleFilterG(index) {
         return () => {
             let temp = genderState

@@ -26,6 +26,7 @@ export default async function handler(req, res) {
     })
   
 
+  // update the ethnicity in every poll the user has voted for, just in case this changes
   const polls = body.user.mongoData.votedPolls
   polls.map(async (poll) => {
     await db2.collection("polls").updateOne(

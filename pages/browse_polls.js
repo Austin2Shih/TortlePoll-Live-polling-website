@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar';
 import styles from '../styles/Browse.module.css'
 import { countVotes } from '../util/pollHandling';
 
-// Getting initial database read
+// Getting list of all public polls
 export async function getServerSideProps(context) {
   const client = await clientPromise
   const dbPolls = client.db("polls")

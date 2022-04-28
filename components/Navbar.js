@@ -8,6 +8,7 @@ import { auth } from '../util/firebase'
 import { getUserFromCookie } from '../util/auth/userCookie'
 import { GrMenu, GrClose } from 'react-icons/gr'
 
+// Function to allow for conditional rendering based off of browswer window width
 const useMediaQuery = (width) => {
     const [targetReached, setTargetReached] = useState(false);
   
@@ -36,12 +37,12 @@ const useMediaQuery = (width) => {
 
 
 export default function Navbar() {
-
+    // var keeping track of if the screensize is less than 740px
     const isBreakpoint = useMediaQuery(740)
 
-    const {user, logout} = useUser();
-    const [loginButton, setLoginButton] = useState(<Link href="/login">Log in</Link>);
-    const [dashboardButton, setDashboardButton] = useState(   
+    const {user, logout} = useUser();   // need user to determine if we render (login + sign up) or (log out + dashboard)
+    const [loginButton, setLoginButton] = useState(<Link href="/login">Log in</Link>);  // login button is a hook so we can change it to logout button
+    const [dashboardButton, setDashboardButton] = useState(     // dashboard button is also a hook so we can change it between dashboard and sign up
     <button className={styles.button}>
         <Link href="/signup">
             <a className={styles.buttonText}>Sign up</a>
@@ -50,9 +51,9 @@ export default function Navbar() {
     const [menu, setMenu] = useState(false)
 
     useEffect(() => {
-        if (user?.mongoData) {
+        if (user?.mongoData) {  // only run the next bit of code is we can access the user's data
             auth.onAuthStateChanged((authUser) => {
-                if (authUser) {
+                if (authUser) {   // if we have a user logged in, set navbar to have dashboard
                     const insideUser = getUserFromCookie()
                     setLoginButton(<button className={styles.cleanButton} onClick={logout('/')}>Log out</button>)
                     setDashboardButton(                    
@@ -61,7 +62,7 @@ export default function Navbar() {
                                 <a className={styles.buttonText}>Dashboard</a>
                             </Link>
                         </button>)
-                } else {
+                } else {    // if we don't have a user, set navbar to have sign up option
                     setLoginButton(<Link href="/login">Log in</Link>)
                     setDashboardButton(                    
                         <button className={styles.button}>

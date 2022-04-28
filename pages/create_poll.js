@@ -1,6 +1,4 @@
 import PollForm from '../components/PollForm';
-import { useUser } from '../util/auth/useUser';
-import Link from 'next/link';
 import { useEffect } from 'react';
 import { auth } from '../util/firebase';
 import { useRouter } from "next/router";

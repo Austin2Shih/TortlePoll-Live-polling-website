@@ -7,10 +7,10 @@ export default async function handler(req, res) {
 
   const pollID = await db.collection("users").insertOne(body)
     .then(async (id) => {
-        console.log(`poll created at: http://localhost:3000/poll?id=${id.insertedId}`)
+        console.log(`user created`)
         return id.insertedId
     }).catch(async () => {
-        console.log('poll could not be created')
+        console.log('user could not be created')
         return null
     })
 

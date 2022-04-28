@@ -1,10 +1,16 @@
 import clientPromise from '../../util/mongodb';
 
+/*
+  Function that searches mongodb database for a user with the existing email
+  If there is no corresponding user, create a new user and return the user's data
+*/
 export default async function handler(req, res) {
   const client = await clientPromise
   const db = client.db("users")
+
   const email = req.body.email
-  const data = await db.collection("users").findOne(
+
+  const data = await db.collection("users").findOne(   // initial search for user
       {
           "email": email
       }).catch()
@@ -12,8 +18,9 @@ export default async function handler(req, res) {
 
   const output = JSON.parse(JSON.stringify(data))
   if (output) {
-    res.json(output);
+    res.json(output); // If user found, return user
   } else {
+    // Create user with this data
     let data = {
       email: email,
       info : {
@@ -32,7 +39,7 @@ export default async function handler(req, res) {
         console.log('user could not be created')
         return null
     })
-    data['_id'] = userId
+    data['_id'] = userId  // inject user id into the data as this is used in many functions
     res.json(data)
   }
 

@@ -7,6 +7,7 @@ import Switch from "react-switch";
 import { updateUserCookiePolls } from '../util/auth/userCookie';
 import { animateScroll as scroll } from 'react-scroll/modules';
 
+// Generates a div with count(amount) input fields, called when we increase or decrease the size of the form
 function makeOptionsList(count) {
   const optionsList = []
   for (let i = 0; i < count; i++) {
@@ -27,19 +28,19 @@ function makeOptionsList(count) {
   
 }
 
-let listSize = 2;
+let listSize = 2; // Default is 2 options
 
 export default function PollForm() {
-  const { user } = useUser()
-  const [options, setOptions] = useState(makeOptionsList(listSize))
-  const [pollLink, setPollLink] = useState(null)
-  const [linkText, setLinkText] = useState("")
-  const [copyText, setCopyText] = useState(null)
-  const [isPrivate, setPrivate] = useState(false);
+    const { user } = useUser()
+    const [options, setOptions] = useState(makeOptionsList(listSize))
+    const [pollLink, setPollLink] = useState(null)
+    const [linkText, setLinkText] = useState("")
+    const [copyText, setCopyText] = useState(null)
+    const [isPrivate, setPrivate] = useState(false);
 
-  function handleSwitch(checked) {
-    setPrivate(checked);
-  }
+    function handleSwitch(checked) {
+      setPrivate(checked);
+    }
 
     function increaseList() {
       listSize++;
@@ -67,15 +68,16 @@ export default function PollForm() {
     }
 
     async function onSubmit(form) {
-      form.preventDefault()
+      form.preventDefault()   // don't render another page
       const target = form.target
-      let data = {
+      let data = {            // create object with info to pass to create_poll api call
         "userId" : user.mongoData._id,
         "question" : target.question.value,
         "private" : isPrivate,
       }
-      let options = []
-      for (let i = 1; i < target.length-4; i++) {
+      // Create list of vote options and add this to data
+      let options = [] 
+      for (let i = 1; i < target.length-4; i++) { 
         options.push({
           id: (i - 1),
           option: target[i].value,
@@ -84,7 +86,7 @@ export default function PollForm() {
         })
       }
       data["options"] = options
-      console.log(options)
+      // Create poll in mongodb
       const response = await fetch("/api/create_poll", {
         method: 'POST',
         body: JSON.stringify(data),
@@ -94,10 +96,10 @@ export default function PollForm() {
       })
   
       const res = await response.json()
-      updateUserCookiePolls(`${res.pollID}`)
-      setPollLink(`/vote?id=${res.pollID}`)
+      updateUserCookiePolls(`${res.pollID}`)  // Update information in cookies
+      setPollLink(`/vote?id=${res.pollID}`)   
       setLinkText("Access your poll here")
-      setTimeout(() => {  
+      setTimeout(() => {     // Scroll to bottom so user notices the new poll has been created
         scroll.scrollToBottom();
       }, 300);
     }

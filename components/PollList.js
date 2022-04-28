@@ -3,8 +3,12 @@ import styles from '../styles/PollList.module.css'
 import Link from 'next/link'
 import { AiOutlineSearch } from 'react-icons/ai'
 
+/*
+Reusable component used in dashboard and browse_polls pages
+Takes an array of polls and displays them in a scrollable box
+*/
 export default function PollList(props) {
-    const [query, setQuery] = useState("")
+    const [query, setQuery] = useState("")    // var to keep track of what the current filter is
 
     function filterData(data) {
         return data.filter((poll) => {

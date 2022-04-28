@@ -6,6 +6,8 @@ export default function Dropdown( props ) {
     const [display, setDisplay] = useState(false)
     const [state, setState] = useState(props.initialSelection)
 
+
+    // Function to detect clicks outside of the element
     function useOutsideAlerter(ref) {
         useEffect(() => {
           function handleClickOutside(event) {
@@ -30,7 +32,9 @@ export default function Dropdown( props ) {
         setDisplay(!display)
     }
 
+    // Calls the serverless function to update the corresponding field (ethnicity or gender)
     function submitForm(option) {
+        // updates the cookie containing current user info
         props.cookieUpdate(option)
         fetch(`/api/${props.apiCall}`, {
             method: 'POST',

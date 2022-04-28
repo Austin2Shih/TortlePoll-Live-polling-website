@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react'; 
+import { useEffect } from 'react'; 
 import { useRouter } from "next/router";
 import { useUser } from '../util/auth/useUser';
 import styles from '../styles/VoteDisplay.module.css'
 import { updateUserCookieVotes } from '../util/auth/userCookie';
 
 // Variable to check if user voted
+// Used to prevent multiple votes from registering if spam voting
 var voted = false
 
 export default function VoteDisplay(props) {

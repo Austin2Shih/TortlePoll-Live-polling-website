@@ -11,6 +11,8 @@ import { countVotes } from '../util/pollHandling';
 // Variable to check if bound to authCheck
 var authBound = false
 
+// Get list of created_polls and voted polls
+// Takes a while because we are getting the current votes of each poll
 export async function getServerSideProps(context) {
   const client = await clientPromise
   const db = client.db("users")

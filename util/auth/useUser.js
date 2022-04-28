@@ -53,7 +53,9 @@ const useUser = () => {
   }
 
   useEffect(() => {
+    // Works if spammed but causes firebase quota limit to be reached
     if(!authListening) {
+      // The first time useUser is called, set a listener to update the user data when there is a change in auth
       const cancelAuthListener = auth
       .onIdTokenChanged(async userToken => {
           if (userToken) {
@@ -75,6 +77,7 @@ const useUser = () => {
     setUser(userFromCookie);
     return () => cancelAuthListener;
   }, []);
+
   return { user, logout };
 };
 

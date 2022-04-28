@@ -12,7 +12,7 @@ const provider = new GoogleAuthProvider();
 
 export async function getServerSideProps(context) {
   const {query} = context
-  let redirectLink = query.redirect
+  let redirectLink = query.redirect   //getting link that the user is supposed to redirect to, used if user gets a poll link and needs to sign up
   if (!redirectLink) {
       redirectLink = '/'
   }
@@ -83,7 +83,7 @@ export default function FirebaseAuth(props) {
           await create_user(userCredential).then(()=> {
             setTimeout(() => {  
               router.push(`/demographics?redirect=${props.url}`);
-            }, 3000);
+            }, 3000); // wait 3 seconds before going in because the database needs some time to ensure that it is updated
           })
         } else {
           setTimeout(() => {  
