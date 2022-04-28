@@ -12,7 +12,7 @@ export default function Home() {
       <Navbar></Navbar>
       <div className={styles.subtitleBlock}>
         <div className={styles.imageContainer}>
-          <p style={{fontSize: "2rem", lineHeight: "0.5rem"}}>Enjoy live results</p>
+          <p style={{fontSize: "2rem"}}>Enjoy live results</p>
         </div>
       </div>
       <div className={styles.imageBlock}>
@@ -22,12 +22,12 @@ export default function Home() {
       </div>
       <div className={styles.subtitleBlock}>
         <div className={styles.imageContainer}>
-          <p style={{fontSize: "2rem", lineHeight: "0.5rem"}}>Filter by demographic groups</p>
+          <p style={{fontSize: "2rem"}}>Filter by demographic groups</p>
         </div>
       </div>
       <div className={styles.imageBlock}>
-        <div className={styles.imageContainer}>
-          <Image src={pollImage}></Image>
+        <div className={styles.videoContainer}>
+        <iframe className={styles.vidFrame} frameborder="0" width="100%" height="100%" src="https://drive.google.com/file/d/1V-pbJNbonVQ2Rt86bwpyUJG9SUk2QCga/preview"></iframe>
         </div>
       </div>
     </div>
