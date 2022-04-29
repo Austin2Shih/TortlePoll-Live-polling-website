@@ -5,11 +5,12 @@ To answer the question of how many voltorbs it would take to power Jubilife vill
 
 ### Finding energy per Voltorb per day
 To find how much energy voltorbs can produce per day, I found that Hisuian voltorbs release energy by discharging the electric current stored in their belly when they get too excited ([IGN Hisuian voltorb pokedex](https://www.ign.com/wikis/pokemon-legends-arceus/Hisuian_Voltorb#Hisuian_Voltorb_Pokedex_Entry)). This means that it is reasonable to assume that the main form of harvesting electiricty from voltorbs is by having them discharge. Now, how much energy is released when a voltorb discharges? There is no exact answer to this question so I had to make a few more assumptions:
-Electric pokemon can learn the move Thunderbolt as well as Discharge and they both have similar power levels (determining how much damage they do). Since they do similar damage to opponents, I assumed that they both released a similar amount of energy. Thunderbolt is a pokemon move where a literal lightning bolt appears out of the pokemon to zap someone so I compared the energy output of the move Thunderbolt to the energy output of the average lightning bolt, which is 5 billion joules according to [this Forbes article](https://www.forbes.com/sites/statoil/2015/01/28/can-we-harvest-lightning-for-the-power-grid/?sh=4a1682571e6c).
+
+Voltorbs can learn the move Thunderbolt as well as Discharge and they both do similar damage at least in the games. Since they do similar damage to opponents, I assumed that they both released a similar amount of energy. Thunderbolt is a pokemon move where a literal lightning bolt appears out of the pokemon to zap someone so I compared the energy output of the move Thunderbolt to the energy output of the average lightning bolt, which is 5 billion joules according to [this Forbes article](https://www.forbes.com/sites/statoil/2015/01/28/can-we-harvest-lightning-for-the-power-grid/?sh=4a1682571e6c).
 
 <img src="https://static.wikia.nocookie.net/pokemonxyanime/images/d/db/Thunderbolt.png/revision/latest/scale-to-width-down/1000?cb=20140331143608" height=250>
 
-However, looking at a picture of the move Thunderbolt being used by Pikachu, I realize that the size of the bolt is probably nothing compared to an average lightining bolt. This is especially true when we consider that pikachu is a pretty small pokemon so even though the bolt looks very intense in the image, it's probably still pretty small. Now, we will just assume that the energy released by Thunderbolt is about 1000 times less than a 5 billion joule lightning bolt so Thunderbolt, and therefore Discharge, should release about 5 million joules or 5 megajoules. Then assuming that we lose about 5% of the energy when trying to harvest it, we are left with (5 megajoules * 0.95) = **4.75 megajoules per use of Discharge**.
+However, looking at a picture of the move Thunderbolt being used by Pikachu, I realize that the size of the bolt is probably nothing compared to an average lightning bolt. This is especially true when we consider that pikachu is a pretty small pokemon so even though the bolt looks very intense in the image, it's probably still pretty small. Now, we will just assume that the energy released by Thunderbolt is about 1000 times less than a 5 billion joule lightning bolt so Thunderbolt, and therefore Discharge, should release about 5 million joules or 5 megajoules. Then assuming that we lose about 5% of the energy when trying to harvest it, we are left with (5 megajoules * 0.95) = **4.75 megajoules per use of Discharge**.
 
 Now, from playing the pokemon games in the past, I know that pokemon cannot exactly spam one ability forever. Discharge has 15 pp, which means it can only be used 15 times before the voltorb needs to go recover for the rest of the day with Nurse Joy. This means that one voltorb can produce (4.75 megajoules/charge x 15 charges) = **71.25 megajoules per Voltorb per day**.
 
@@ -40,13 +41,15 @@ Now that we have that a Voltorb can produce 71.25 megajoules per day and we need
 Tortlepoll is the result of information that I've absorbed over the past two weeks on technologies that I have never touched before. I tried implementing as many cool features as I could while making the site reliable. That being said, the website is essentially still in Beta testing so if you do come across an unlikely bug, a quick refresh of the page will fix everything.
 
 **Note**: For access to 90% of the website, you will need to either log in or sign up. I have given you two options to test my project with.
-1. Log in with the following credentials:
+1. (Preferred) Create a new account with any email of your choice!
+
+&nbsp;&nbsp;&nbsp;&nbsp;**or**
+
+2. Log in with the following credentials (no option to enter demographic information upon setup):
 ```
 email: welcomeign@gmail.com
 password: LivePolling!
 ```
-**or**
-2. Create a new account with any email of your choice!
 
 Thank you for your time and consideration of my application! Enjoy the website!
 
