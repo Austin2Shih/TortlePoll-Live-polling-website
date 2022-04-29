@@ -8,15 +8,13 @@ import pollImage from '../public/home-images/Poll-pic.PNG'
 export default function Home() {  
 
   return (
-    <div>
+    <div className={styles.page}>
       <Navbar></Navbar>
       <div className={styles.subtitleBlock}>
-        <div className={styles.imageContainer}>
-          <p style={{fontSize: "2rem"}}>Enjoy live results</p>
+          <p style={{fontSize: "1.4rem"}}>Enjoy live results</p>
         </div>
-      </div>
       <div className={styles.imageBlock}>
-      <div className={styles.videoContainer}>
+        <div className={styles.videoContainer}>
           <video className={styles.vidFrame} autoPlay muted loop>
             <source src={'https://res.cloudinary.com/dkmgxd9ef/video/upload/v1651213670/TortlePoll/Lasagna-clip_dmfgly.mp4'}></source>
           </video>
@@ -24,7 +22,7 @@ export default function Home() {
       </div>
       <div className={styles.subtitleBlock}>
         <div className={styles.imageContainer}>
-          <p style={{fontSize: "2rem"}}>Filter by demographic groups</p>
+          <p style={{fontSize: "1.4rem"}}>Filter by demographic groups</p>
         </div>
       </div>
       <div className={styles.imageBlock}>

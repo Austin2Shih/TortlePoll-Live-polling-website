@@ -199,7 +199,7 @@ export default function Poll(props) {
 
     function copyToClipboard() {
         const tempInput = document.createElement('input')
-        tempInput.value = `${process.env.NEXT_PUBLIC_VERCEL_URL}/vote${props.url.slice(5)}`
+        tempInput.value = `${process.env.NEXT_PUBLIC_URL}/vote${props.url.slice(5)}`
         document.body.appendChild(tempInput)
         tempInput.select()
         document.execCommand('copy')
@@ -229,7 +229,7 @@ export default function Poll(props) {
                 <h3 style={{marginTop: '3rem'}}>Share this poll</h3>
                 <div onClick={()=> {copyToClipboard()}} className={copyStyles.linkDisplayContainer}>
                     <div className={copyStyles.linkHolder}>
-                        <p id='voteLink'>{`${process.env.NEXT_PUBLIC_VERCEL_URL}/vote${props.url.slice(5)}`}</p>
+                        <p id='voteLink'>{`${process.env.NEXT_PUBLIC_URL}/vote${props.url.slice(5)}`}</p>
                     </div>
                     <AiOutlineCopy className={copyStyles.copySymbol}></AiOutlineCopy>
                 </div>

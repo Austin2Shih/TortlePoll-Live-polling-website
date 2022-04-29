@@ -12,7 +12,7 @@ export default function PollList(props) {
 
     function filterData(data) {
         return data.filter((poll) => {
-          return poll.question.includes(query)
+          return poll.question.toLowerCase().includes(query.toLowerCase())
         })
     }
 

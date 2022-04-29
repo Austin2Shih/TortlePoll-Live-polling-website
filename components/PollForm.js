@@ -56,7 +56,7 @@ export default function PollForm() {
 
     function copyToClipboard() {
       const tempInput = document.createElement('input')
-      tempInput.value = `${process.env.NEXT_PUBLIC_VERCEL_URL}${pollLink}`
+      tempInput.value = `${process.env.NEXT_PUBLIC_URL}${pollLink}`
       document.body.appendChild(tempInput)
       tempInput.select()
       document.execCommand('copy')
@@ -176,7 +176,7 @@ export default function PollForm() {
               <h3>Share your poll</h3>
               <div onClick={()=> {copyToClipboard()}} className={styles.linkDisplayContainer}>
                 <div className={styles.linkHolder}>
-                  <p id='voteLink'>{`${process.env.NEXT_PUBLIC_VERCEL_URL}${pollLink}`}</p>
+                  <p id='voteLink'>{`${process.env.NEXT_PUBLIC_URL}${pollLink}`}</p>
                 </div>
                 <AiOutlineCopy className={styles.copySymbol}></AiOutlineCopy>
               </div>
