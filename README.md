@@ -1,4 +1,4 @@
-## Hisui's New Power Plant
+# Hisui's New Power Plant
 To answer the question of how many voltorbs it would take to power Jubilife village, there are two main bits of information we must figure out.
 1. How much energy a voltorb can produce per day
 2. How much energy Jubilife city needs per day
@@ -26,7 +26,7 @@ According to the [US Energy Information Administration](https://www.eia.gov/tool
 Now that we have that a Voltorb can produce 71.25 megajoules per day and we need 530 megajoules per day, we can just divide:
 (530 megajoules / 71.25 megajoules/voltorb) = 7.44 Voltorbs. We then round up and end up with **8 Voltorbs required to power Jubilife Village!**
 
-## TortlePoll
+# TortlePoll
 
 [TortlePoll](https://tortlepoll.vercel.app/) is a live polling website where users can create and take polls in an instant. Try it out [here](https://tortlepoll.vercel.app/).
 
@@ -36,24 +36,36 @@ Now that we have that a Voltorb can produce 71.25 megajoules per day and we need
 - Browse and take public polls
 - Keep track of polls you've created and voted for
 
-## Note for IGN
-TortlePoll was my first time using technologies such as Next.js, Firebase Auth, MongoDB, and Pusher. During the past two weeks, I've had to learn about serverless functions, user persistence with authentication, and controlling web-sockets through countless online tutorials which were unlikely to have followed all of the best web development practices.
+## Notes for IGN
+Tortlepoll is the result of information that I've absorbed over the past two weeks on technologies that I have never touched before. I tried implementing as many cool features as I could while making the site reliable. That being said, the website is essentially still in Beta testing so if you do come across an unlikely bug, a quick refresh of the page will fix everything.
 
-This website is a collection of the information that I've absorbed over the past two weeks and I tried implementing as many cool features as I could while making the site reliable. That being said, during some tests, I have run into issues where an element of a page won't load probably due to an authentication issue. This is rare, but in the case that the one time you try to demo my project it fails, please stay patient with my work and refresh the page.
+**Note**: For access to 90% of the website, you will need to either log in or sign up. I have given you two options to test my project with.
+1. Log in with the following credentials:
+```
+email: welcomeign@gmail.com
+password: LivePolling!
+```
+**or**
+2. Create a new account with any email of your choice!
 
-![Image of poll results](/public/home-images/Poll-pic.PNG)
+Thank you for your time and consideration of my application! Enjoy the website!
+
+### Local compilation instructions
+1. Clone this repository to your local machine. The .env files are included and removed from the git-ignore for your convenience.
+2. Open up a powershell window (or a terminal window of your choice) and cd to where the repository is cloned to. While inside the root folder, run the command:
+```
+npm install
+```
+3. After all the packages are installed, run the command: 
+```
+npm run dev
+```
+The project should compile and become viewable from http://localhost:3000/
 
 ## Technologies used
-#### Next.js
-Using Next.js allowed me to have an easier time handling the backend of my project and deploy it to Vercel. However, there were a few issues that came with having Server Side Rendering(SSR) such as many libraries not being compatible with SSR as well as many web development tutorials made for React.js that could not easily translate to Next.js.
-
-#### MongoDB
-I used MongoDB to store user data and poll data. After succesfully integrating MongoDB into my Next.js app, I created custom endpoints in the app allowing me to query the database and efficiently retrieve information.
-
-#### Pusher
-Pusher was the core of my project since we needed live polling. After doing a lot of research on web-sockets, I realized that those options were not as easily done with Next.js since Next.js only supports serverless functions while most web-socket solutions online required you to be running Express.js servers. Also, due to older documentation on both Pusher and Vercel's websites, I ended up having to alter the documented code a lot before I could get reliable live updating.
-
-#### Firebase Auth
-Firebase Auth itself was straightforward to implement, but it was user persistence that was difficult. After doing tons of research on user authentication persistence, I still do not know if the way I used cookies to keep track of user data and authentication state is the best way to do it in the industry.
-
-
+- Next.js
+- MongoDB
+- Pusher
+- Firebase Auth
+- Chart.js
+- Cloudinary
