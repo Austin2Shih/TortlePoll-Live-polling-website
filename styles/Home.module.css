@@ -3,6 +3,7 @@
 }
 
 .subtitleBlock {
+  text-align: center;
   background-color: var(--subtitle);
   margin-top: 3vh;
   padding-left: 2rem;
