@@ -67,7 +67,7 @@ npm install
 ```
 **For MacOS:**
 
-Move to the MacOS-compilation branch (only difference is package-lock.json has been removed). While inside the root folder, run the command:
+Move to the **MacOS-compilation** branch (only difference is package-lock.json has been removed). While inside the root folder, run the command:
 ```
 npm install --force
 ```
