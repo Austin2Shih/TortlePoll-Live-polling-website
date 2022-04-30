@@ -28,7 +28,7 @@ According to the [US Energy Information Administration](https://www.eia.gov/tool
 Now that we have that a Voltorb can produce 71.25 megajoules per day and we need 530 megajoules per day, we can just divide:
 (530 megajoules / 71.25 megajoules/voltorb) = 7.44 Voltorbs. We then round up and end up with **8 Voltorbs required to power Jubilife Village!**
 
-# TortlePoll
+# Live-Polling Website
 
 [TortlePoll](https://tortlepoll.vercel.app/) is a live polling website where users can create and take polls in an instant. Try it out [here](https://tortlepoll.vercel.app/).
 
@@ -56,10 +56,23 @@ Thank you for your time and consideration of my application! Enjoy the website!
 
 ### Local compilation instructions
 1. Clone this repository to your local machine. The .env files are included and removed from the git-ignore for your convenience.
-2. Open up a powershell window (or a terminal window of your choice) and cd to where the repository is cloned to. While inside the root folder, run the command:
+2. Open up a powershell window (or a terminal window of your choice) and cd to where the repository is cloned to.
+
+**For Windows:**
+
+Make sure you are on the main branch.
+While inside the root folder, run the command:
 ```
 npm install
 ```
+**For MacOS:**
+
+Move to the MacOS-compilation branch (only difference is package-lock.json has been removed). While inside the root folder, run the command:
+```
+npm install --force
+```
+There will be some dependency issues, but everything should still work. This is because I developed on a Windows environment and Windows to MacOS can have problems.
+
 3. After all the packages are installed, run the command: 
 ```
 npm run dev
