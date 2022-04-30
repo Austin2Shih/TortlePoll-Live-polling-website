@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import {auth} from '../util/firebase';
 import Dropdown from '../components/Dropdown.js'
@@ -6,7 +6,7 @@ import { useUser } from '../util/auth/useUser';
 import Navbar from '../components/Navbar'
 import styles from '../styles/Demographics.module.css'
 import Link from 'next/link'
-import { updateUserCookieEthnicity, updateUserCookieGender } from "../util/auth/userCookie";
+import { updateUserCookieEthnicity, updateUserCookieGender, getUserFromCookie } from "../util/auth/userCookie";
 
 // Variable to check if bound to authCheck
 var authBound = false
@@ -62,8 +62,6 @@ export default function Demographics(props) {
     }
 
   }, [])
-
-  console.log("DEMOGRAPHICS PAGE", user)
 
   return (
     <div className={styles.bigContainer}>

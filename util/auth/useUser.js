@@ -11,26 +11,22 @@ import {
 // Variable to keep track of if authlistener happened
 var authListening = false
 
-export const mapUserData = async user => {
-  const { uid, email } = user;
-  const token = await user.getIdToken(true);
-  const response = await fetch(`/api/create_get_user`, {
+export const mapUserData = async (email) => {
+  const response = await fetch(`/api/get_user`, {
     method: 'POST',
     body: JSON.stringify({
-        "email" : `${user.email}`,
+        "email" : email,
     }),
     headers: {
         "Content-type": "application/json; charset=UTF-8"
     }
-  }).then(async (response) => {
-    const res = await response.json()
-    return res
   })
+    
+  const res = await response.json()
+
   return JSON.stringify({
-    id: uid,
     email,
-    token,
-    mongoData: response
+    mongoData: res
   });
 };
 
@@ -52,6 +48,12 @@ const useUser = () => {
     }
   }
 
+  async function updateUser(email) {
+    const userData = await mapUserData(email);
+    setUserCookie(userData);
+    setUser(JSON.parse(userData));
+  }
+
   useEffect(() => {
     // Works if spammed but causes firebase quota limit to be reached
     if(!authListening) {
@@ -59,9 +61,7 @@ const useUser = () => {
       const cancelAuthListener = auth
       .onIdTokenChanged(async userToken => {
           if (userToken) {
-            const userData = await mapUserData(userToken);
-            setUserCookie(userData);
-            setUser(JSON.parse(userData));
+            await updateUser(userToken.email)
           } else {
             removeUserCookie();
             setUser();
@@ -78,7 +78,7 @@ const useUser = () => {
     return () => cancelAuthListener;
   }, []);
 
-  return { user, logout };
+  return { user, logout, updateUser };
 };
 
 export { useUser };

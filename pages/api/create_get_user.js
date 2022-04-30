@@ -5,6 +5,7 @@ import clientPromise from '../../util/mongodb';
   If there is no corresponding user, create a new user and return the user's data
 */
 export default async function handler(req, res) {
+  console.log("CREATE GET UESR")
   const client = await clientPromise
   const db = client.db("users")
 

@@ -3,7 +3,17 @@ import clientPromise from '../../util/mongodb';
 export default async function handler(req, res) {
   const client = await clientPromise
   const db = client.db("users")
-  const body = req.body
+  const email = req.body.email
+  const body = {
+    email: email,
+    info : {
+      ethnicity: null,
+      gender: null,
+      birthday: null,
+    },
+    polls: [],
+    votedPolls: []
+  }
 
   const pollID = await db.collection("users").insertOne(body)
     .then(async (id) => {

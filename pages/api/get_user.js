@@ -4,6 +4,7 @@ export default async function handler(req, res) {
   const client = await clientPromise
   const db = client.db("users")
   const email = req.body.email
+
   const data = await db.collection("users").findOne(
       {
           "email": email
@@ -11,6 +12,7 @@ export default async function handler(req, res) {
 
 
   const output = JSON.parse(JSON.stringify(data))
+
   if (output) {
     res.json(output);
   } else {

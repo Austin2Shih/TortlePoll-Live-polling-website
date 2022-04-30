@@ -8,6 +8,7 @@ import Image from 'next/image'
 import logo from '../public/cowboy_turtle.png'
 import {FcGoogle} from 'react-icons/fc'
 import NProgress from "nprogress";
+import { useUser } from "../util/auth/useUser";
 
 const provider = new GoogleAuthProvider();
 
@@ -26,6 +27,7 @@ export async function getServerSideProps(context) {
 }
 
 export default function FirebaseAuth(props) {
+  const {user, logout, updateUser} = useUser(); //need to ensure that useUser is called for the auth change listener
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("")
   const [error, setError] = useState(null)
@@ -37,9 +39,10 @@ export default function FirebaseAuth(props) {
       .then(async (userCredential) => {
         console.log("logged in!")
         NProgress.start()
+        updateUser(userCredential.user.email) //update user cookies
         setTimeout(() => {  
           router.push(props.url);
-        }, 3000);
+        }, 500);
         
       }).catch((error) => {
         setError(error.message)
@@ -47,31 +50,12 @@ export default function FirebaseAuth(props) {
       })
   }
 
-  async function create_user(user) {
-    const data = {
-      email: user.user.email,
-      info : {
-        ethnicity: null,
-        gender: null,
-        birthday: null,
-      },
-      polls: [],
-      votedPolls: []
-    }
-    return await fetch("/api/create_user", {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8"
-      }
-    })
-  }
-
   function handleGoogleLogin() {
       signInWithPopup(auth, provider)
         .then(async (userCredential) => {
         console.log("logged in!")
-        const mongoUser = await fetch('/api/get_user', {
+        // Search for user in mongodb database
+        const mongoUser = await fetch('/api/get_user', {    
           method: 'POST',
           body: JSON.stringify({
             email: userCredential.user.email
@@ -82,19 +66,31 @@ export default function FirebaseAuth(props) {
         })
         const res = await mongoUser.json()
         if (!res.email) {
+          // If mongodb user is not in the database, then create the user
           NProgress.start()
-          await create_user(userCredential).then(()=> {
+          await fetch("/api/create_user", {
+            method: 'POST',
+            body: JSON.stringify({
+              email: userCredential.user.email
+            }),
+            headers: {
+              "Content-type": "application/json; charset=UTF-8"
+            }
+          })
+          .then(()=> {
+            // After creating the mongodb user, update user cookie and push to demographics page
+            updateUser(userCredential.user.email)   // update user cookies
             setTimeout(() => {  
               router.push(`/demographics?redirect=${props.url}`);
-            }, 3000); // wait 3 seconds before going in because the database needs some time to ensure that it is updated
+            }, 500); // wait 0.5 seconds before going in because the database needs some time to ensure that it is updated
           })
         } else {
           NProgress.start()
+          updateUser(userCredential.user.email)   // update user cookies
           setTimeout(() => {  
             router.push(props.url);
-          }, 3000);
+          }, 500);
         }
-
       }).catch((error) => {
         setError(error.message)
         console.log("ERROR: ", error)

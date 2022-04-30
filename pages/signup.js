@@ -8,9 +8,9 @@ import logo from '../public/cowboy_turtle.png'
 import Link from 'next/link';
 import {FcGoogle} from 'react-icons/fc'
 import NProgress from 'nprogress'
+import { useUser } from "../util/auth/useUser";
 
-
-const provider = new GoogleAuthProvider();
+const provider = new GoogleAuthProvider();    // required for sign-in with google
 
 export async function getServerSideProps(context) {
   const {query} = context
@@ -27,43 +27,36 @@ export async function getServerSideProps(context) {
 }
 
 export default function SignUp(props) {
+    const {user, logout, updateUser} = useUser();   //need to ensure that useUser is called for the auth change listener
     const [email, setEmail] = useState("");
     const [passwordOne, setPasswordOne] = useState("");
     const [passwordTwo, setPasswordTwo] = useState("");
     const router = useRouter();
     const [error, setError] = useState(null);
 
-    async function create_user(user) {
-      const data = {
-        email: user.user.email,
-        info : {
-          ethnicity: null,
-          gender: null,
-          birthday: null,
-        },
-        polls: [],
-        votedPolls: []
-      }
-      return await fetch("/api/create_user", {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8"
-        }
-      })
-    }
-
     async function handleSignUp(e) {
       e.preventDefault();
       if(passwordOne === passwordTwo)
+        // If password and confirm password match, create user
         await createUserWithEmailAndPassword(auth, email, passwordOne)
         .then(async (userCredential) => {
-          await create_user(userCredential).then(() => {
-            console.log("Success. The user is created in Firebase")
+          // Also create user in mongodb
+          await fetch("/api/create_user", {
+            method: 'POST',
+            body: JSON.stringify({
+              email: userCredential.user.email
+            }),
+            headers: {
+              "Content-type": "application/json; charset=UTF-8"
+            }
+          })
+          .then(() => {
+            console.log("Success. The user is created in Firebase and Mongodb")
             NProgress.start()
+            updateUser(userCredential.user.email) //update user cookies
             setTimeout(() => {  
               router.push(`/demographics?redirect=${props.url}`); 
-            }, 3000);
+            }, 500);
           }) 
         })
         .catch(error => {
@@ -78,6 +71,7 @@ export default function SignUp(props) {
       signInWithPopup(auth, provider)
         .then(async (userCredential) => {
         console.log("logged in!")
+        // Search for user in mongodb database
         const mongoUser = await fetch('/api/get_user', {
           method: 'POST',
           body: JSON.stringify({
@@ -89,19 +83,31 @@ export default function SignUp(props) {
         })
         const res = await mongoUser.json()
         if (!res.email) {
+          // If mongodb user not found, create user
           NProgress.start()
-          await create_user(userCredential).then(()=> {
+          await fetch("/api/create_user", {
+            method: 'POST',
+            body: JSON.stringify({
+              email: userCredential.user.email
+            }),
+            headers: {
+              "Content-type": "application/json; charset=UTF-8"
+            }
+          })
+          .then(()=> {
+            updateUser(userCredential.user.email) //update user cookies
             setTimeout(() => {  
               router.push(`/demographics?redirect=${props.url}`);
-            }, 3000);
+            }, 500); // wait 0.5 seconds before going in because the database needs some time to ensure that it is updated
           })
         } else {
+          // If user found in mongodb just log in like usual
           NProgress.start()
+          updateUser(userCredential.user.email) //update user cookies
           setTimeout(() => {  
             router.push(props.url);
-          }, 3000);
+          }, 500);
         }
-
       }).catch((error) => {
         setError(error.message)
         console.log("ERROR: ", error)
